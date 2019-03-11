@@ -11,9 +11,9 @@
 		<link rel="stylesheet" type="text/css" href="NavigationBarTheme.css">
 		<div class="topnav">
 		  <a class="active" href="CustomerHomePage.jsp">Home</a>
-		  <a href="ViewOrders.jsp">Orders</a>
+		  <form action="ViewOrders"><input type=submit value="Orders"></form>
 		  <a href="Login.jsp" style="float:right">Log Out</a>
-		  <a href="VewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
+		  <a href="ViewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
 		</div>
 		<h1 style="text-align:center">Order #113456</h1>
 		<table style="width:100%" align="center">
@@ -27,43 +27,25 @@
 				    <th>Status</th>
 				    <th></th>
 			  	</tr>
-			  	<tr>
-			  		<td style="text-align:center"><form action="ConcertDetailsSelection.jsp"><input type=submit value="View"></form></td>
-				    <td style="text-align:center">Mac Miller</td>
-				    <td style="text-align:center">4</td>
-				    <td style="text-align:center">The Bourbon Theater</td>
-				    <td style="text-align:center">7:00pm</td>
-				    <td style="text-align:center">$240.00 ($60 x 4)</td>
-   				    <td style="text-align:center">Shipped</td>
-   				    <td style="text-align:center"><form action="CancelOrder.jsp"><input type=submit disabled=true value="Cancel" style="background-color:gray"></form></td>	    	
-			    </tr>
-			    <tr>
-			  		<td style="text-align:center"><form action="ConcertDetailsSelection.jsp"><input type=submit value="View"></form></td>
-			  		<td style="text-align:center">6LACK</td>
-			  		<td style="text-align:center">6</td>
-				    <td style="text-align:center">The Bourbon Theater</td>
-				    <td style="text-align:center">7:00pm</td>
-				    <td style="text-align:center">$120.00 ($20 x 6)</td>
-				    <td style="text-align:center">Processing</td>
-				    <td style="text-align:center"><form action="CancelOrder.jsp"><input type=submit value="Cancel" style="background-color:#E73712"></form></td>	    	
-			    </tr>
-			  	<tr>
-				  	<td style="text-align:center"><form action="ConcertDetailsSelection.jsp"><input type=submit value="View"></form></td>
-				  	<td style="text-align:center">Drake</td>
-				  	<td style="text-align:center">2</td>
-				  	<td style="text-align:center">Pinnacle Bank Arena</td>
-				    <td style="text-align:center">9:00pm</td>
-				    <td style="text-align:center">$650.00 ($325 x 2)</td>
-				    <td style="text-align:center">Processing</td>
-				    <td style="text-align:center"><form action="CancelOrder.jsp"><input type=submit value="Cancel" style="background-color:#E73712"></form></td>
-			    </tr>
+    		    <c:forEach items="${items}" var="items">
+			        <tr>
+			        	<td style="text-align:center"><form action=ConcertSearchResult >
+			        	<input type="hidden" name="venueID" value="${concert.getP().getVenueID()}">
+			        	<button name="detailsButton" type=submit value="${concert.getP().getId()}">View Concert Details</button></form></td>
+			            <td>${item.getC().getConcertName()} </td>
+			            <td>${item.getP()}</td>
+			            <td>${item.getV().getAddress()}</td>
+			            <td>${item.getP().getStarTime()}</td>
+			            <td>${item.getT().getTicketPrice()}</td>
+			        </tr>
+		   		</c:forEach>
 			    <tr>
 			    	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center">Total </td>
-				    <td style="text-align:center">$1010</td>	
+				    <td style="text-align:center">${orders.getTotalCost() }</td>	
 			    </tr>
 			    <tr>
 			    	<td style="text-align:center"></td>
@@ -71,7 +53,7 @@
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center">Date Order </td>
-				    <td style="text-align:center">1/30/2019</td>	
+				    <td style="text-align:center">${orders.getOrderDate()</td>	
 			    </tr>
 		  	</table>
 	</body>

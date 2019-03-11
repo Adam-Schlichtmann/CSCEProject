@@ -31,27 +31,28 @@
 		<link rel="stylesheet" type="text/css" href="NavigationBarTheme.css">
 		<div class="topnav">
 		  <a class="active" href="CustomerHomePage.jsp">Home</a>
-		  <a href="ViewOrders.jsp">Orders</a>
+		  <form action="ViewOrders"><input type=submit value="Orders"></form>
 		  <a href="Login.jsp" style="float:right">Log Out</a>
-		  <a href="VewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
+		  <a href="ViewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
 		</div>
 		<h1 style="text-align:center">Orders</h1>
-		<table style="width:100%" id="orderTable">
-		  	<tr>
+		<table style="width:100%" id="orderTable">    
+			<tr>
 			  	<th></th>
 			    <th>Order Number</th>
 			    <th>Order Total</th> 
-			    <th>Ordered Date</th>
-
+			    <th>Order Date</th>
 		  	</tr>
-		  	<tr>
-		  		<td style="text-align:center"><form action="ManageOrder.jsp"><input type=submit value="View"></form></td>
-			    <td style="text-align:center">113456</td>
-			    <td style="text-align:center">$1010</td>
-			    <td style="text-align:center">1/30/2019</td>  	
-		    </tr>
-		    
-
+		    <c:forEach items="${orders}" var="order">
+		        <tr>
+		        	<td style="text-align:center"><form action=ManageOrder >
+		        	<input type="hidden" name="order" value="${order.getId()}">
+		        	<button name="orderID" type=submit value="${order.getId()}">View Order Details</button></form></td>
+		            <td>${order.getId()} </td>
+		            <td>${order.getTotalCost()}</td>
+		            <td>${order.getOrderDate()}</td>
+		        </tr>
+		    </c:forEach>
 	  	</table>
 	</body>
 </html>

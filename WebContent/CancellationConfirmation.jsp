@@ -11,9 +11,9 @@
 		<link rel="stylesheet" type="text/css" href="NavigationBarTheme.css">
 		<div class="topnav">
 		  <a class="active" href="CustomerHomePage.jsp">Home</a>
-		  <a href="ViewOrders.jsp">Orders</a>
+		  <form action="ViewOrders"><input type=submit value="Orders"></form>
 		  <a href="Login.jsp" style="float:right">Log Out</a>
-		  <a href="VewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
+		  <a href="ViewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
 		</div>
 		<h1 style="text-align:center">Cancellation Confirmation</h1>
 		<img src="Pics/Drake.jpg" alt="Drake" style="display:block; margin:auto auto; width:200px; height:200px"></img>
