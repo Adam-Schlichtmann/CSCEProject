@@ -5,6 +5,8 @@ public class OrderItems {
 	private int OrderId;
 	private int PerformanceId;
 	private int Quantity;
+	private int totalPrice;
+	private boolean processed;
 	private CPTValues cpt;
 	
 	public OrderItems() {
@@ -42,5 +44,21 @@ public class OrderItems {
 
 	public void setCpt(CPTValues cpt) {
 		this.cpt = cpt;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public boolean isProcessed() {
+		return processed;
+	}
+
+	public void setProcessed(boolean processed) {
+		this.processed = processed;
 	}
 }

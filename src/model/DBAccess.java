@@ -398,6 +398,31 @@ public class DBAccess {
 		
 	}
 	
+	public OrderItems getOrderItembyOrderItemID(int oID) {
+		CPTValuesDB cptDB = new CPTValuesDB();
+		OrderItems OrderItemHolder = new OrderItems();
+		String SQL = "SELECT * from orderitems WHERE Id='"+oID+"'";
+	    Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			while (rs.next()){
+				OrderItemHolder.setId(rs.getInt("Id"));
+				OrderItemHolder.setOrderId(rs.getInt("OrderId"));
+				OrderItemHolder.setPerformanceId(rs.getInt("PerformanceId"));
+				OrderItemHolder.setQuantity(rs.getInt("Quantity"));
+				OrderItemHolder.setCpt(cptDB.getCPTData(OrderItemHolder.getPerformanceId()));
+		    }
+			
+		    stat.close();
+		        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return OrderItemHolder;
+		
+	}
+	
 	public void delOrderItem(int oID) {
 		String SQL = "DELETE from orderitems WHERE Id='"+oID+"'";
 	    Statement stat;

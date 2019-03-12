@@ -31,22 +31,22 @@
 		  	</tr>
 		  	<tr>
 		  		<td></td>
-			  	<td style="text-align:center">Drake</td>
-			  	<td style="text-align:center">2</td>
-			  	<td style="text-align:center">Pinnacle Bank Arena</td>
-			    <td style="text-align:center">9:00pm</td>
-			    <td style="text-align:center">$650.00 ($325 x 2)</td>
-			    <td style="text-align:center">Processing</td>
+			  	<td style="text-align:center">${orderItem.cpt.c.getConcertName()}</td>
+			  	<td style="text-align:center">${orderItem.getQuantity()}</td>
+			  	<td style="text-align:center">${orderItem.cpt.v.getName()}</td>
+			    <td style="text-align:center">${orderItem.cpt.p.getStartTime()}</td>
+			    <td style="text-align:center">$ ${orderItem.getTotalPrice()}</td>
+			    <td style="text-align:center">${ orderItem.processed ? 'Processed' : 'Processing'}</td>
 		    </tr>
 
 	  	</table>
 	  	<div style="text-align:center; margin:10px;">
-			<form action="CustomerHomePage.jsp">
-				<input type=submit value="Discard Cancellation">
+			<form action="ManageOrder">
+				<button name="orderID" type=submit value="${orderItem.getOrderId()}" ${ orderItem.processed ? 'disabled="disabled"' : ''} >Discard Cancellation</button>
 			</form>
 			<br>
-			<form action="CancellationConfirmation.jsp">
-				<input  type=submit value="Confirm Cancellation" >	
+			<form action="CancelOrderTransaction">
+				<button name="orderID" type=submit  value="${orderItem.getOrderId()}" ${ orderItem.processed ? 'disabled="disabled"' : ''} >Confirm Cancellation</button>
 			</form>
 		</div>
 	</body>

@@ -11,6 +11,14 @@ public class OrderItemsDB {
 		return o;
 	}
 	
+	public static OrderItems getOrderItembyOrderItemID(int oID){
+		DBAccess db = new DBAccess();
+		db.connectMeIn();
+		OrderItems o = db.getOrderItembyOrderItemID(oID);
+		db.closeConnection();
+		return o;
+	}
+	
 	public static void delOrderItem(int oID){
 		DBAccess db = new DBAccess();
 		db.connectMeIn();

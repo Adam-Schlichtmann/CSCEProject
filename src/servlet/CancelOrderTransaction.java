@@ -1,8 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,26 +8,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import model.CPTValues;
-import model.CPTValuesDB;
 import model.OrderItems;
 import model.OrderItemsDB;
 import model.Orders;
 import model.OrdersDB;
 
 /**
- * Servlet implementation class ManageOrder
+ * Servlet implementation class CancelOrderTransaction
  */
-@WebServlet("/ManageOrder")
-public class ManageOrder extends HttpServlet {
+@WebServlet("/CancelOrderTransaction")
+public class CancelOrderTransaction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManageOrder() {
+    public CancelOrderTransaction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,17 +33,27 @@ public class ManageOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String orderID = request.getParameter("orderID");
-
+		String orderItemID = request.getParameter("orderID");
 		OrderItemsDB orderItemsDB = new OrderItemsDB();
-		List<OrderItems> orderItems = OrderItemsDB.getOrderItemsbyOrderID(Integer.parseInt(orderID));
+		OrderItems orderItem = orderItemsDB.getOrderItembyOrderItemID(Integer.parseInt(orderItemID));
+		Orders order = new Orders();
 		OrdersDB ordersDB = new OrdersDB();
-		Orders orders = ordersDB.getOrdersByOrderID(Integer.parseInt(orderID));
-		request.setAttribute("orders", orders);
-		request.setAttribute("orderItems", orderItems);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("ManageOrder.jsp");
-		System.out.println(orderItems.get(0).getCpt().getV().getName());
-		System.out.println("here");
+		
+		
+		order = ordersDB.getOrdersByOrderID(orderItem.getOrderId());
+		int refundAmount = orderItem.getCpt().getT().getTicketPrice() * orderItem.getQuantity();
+		int totalPrice =  order.getTotalCost() - refundAmount;
+		order.setTotalCost(totalPrice);
+		
+		//orderItemsDB.delOrderItem(Integer.parseInt(orderItemID)); //delete order item from database
+		//ordersDB.setTotalPrice(int orderID, int newTotalPrice); //need to update total price in database for order
+		
+		
+		request.setAttribute("order", order);
+		request.setAttribute("orderItem", orderItem);
+		request.setAttribute("refundAmount", refundAmount );
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("CancellationConfirmation.jsp");
 		dispatcher.forward(request, response);
 	}
 

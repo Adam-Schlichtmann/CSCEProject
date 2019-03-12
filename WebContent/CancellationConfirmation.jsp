@@ -16,16 +16,15 @@
 		  <a href="ViewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
 		</div>
 		<h1 style="text-align:center">Cancellation Confirmation</h1>
-		<img src="Pics/Drake.jpg" alt="Drake" style="display:block; margin:auto auto; width:200px; height:200px"></img>
+		<img src="${orderItem.getCpt().getC().getThumbnail()}"  style="display:block; margin:auto auto; width:200px; height:200px"></img>
 		<form style="text-align:center" name="paymentForm"   >
-			<h4>Band/Artist: Drake</h4>
-			<h4>Quantity : 2</h4>
-			<h4>Venue : Pinnacle Bank Arena</h4>
-			<h4>Time : 9:00pm</h4>
-			<h4>Paid Total : $650</h4>
-			<h4>Deposit : $100</h4>
-			<h4>Refund Amount : $550</h4>
-			<h4 style="color:yellow">Status: Cancelled, Processing Refund</h4>
+			<h4>Band/Artist: ${orderItem.getCpt().getC().getConcertName()}</h4>
+			<h4>Quantity : ${orderItem.getQuantity()}</h4>
+			<h4>Venue : ${orderItem.getCpt().getV().getName()}</h4>
+			<h4>Time : ${orderItem.cpt.p.getStartTime()}</h4>
+			<h4>Paid Total : ${order.getTotalCost()}</h4>
+			<h4>Refund Amount : $ ${orderItem.getTotalPrice()}</h4>
+			<h4 style="color:Green">Status: Order Cancelled, Processing Refund</h4>
 		</form>
 	</body>
 </html>
