@@ -35,7 +35,7 @@ public class ViewOrders extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		int userID = (int) session.getAttribute("id");
-		List<Orders> orders = OrdersDB.getOrders(userID);
+		List<Orders> orders = OrdersDB.getOrdersByCustomerID(userID);
 		session.setAttribute("orders", orders);
 		response.sendRedirect("ViewOrders.jsp");
 		

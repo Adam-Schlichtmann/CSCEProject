@@ -5,6 +5,7 @@ public class OrderItems {
 	private int OrderId;
 	private int PerformanceId;
 	private int Quantity;
+	private CPTValues cpt;
 	
 	public OrderItems() {
 		super();
@@ -33,5 +34,13 @@ public class OrderItems {
 	}
 	public void setQuantity(int quantity) {
 		Quantity = quantity;
+	}
+
+	public CPTValues getCpt() {
+		return cpt;
+	}
+
+	public void setCpt(CPTValues cpt) {
+		this.cpt = cpt;
 	}
 }

@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -11,24 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.CPTValues;
-import model.CPTValuesDB;
-import model.OrderItems;
-import model.OrderItemsDB;
 import model.Orders;
 import model.OrdersDB;
 
 /**
- * Servlet implementation class ManageOrder
+ * Servlet implementation class CancelOrder
  */
-@WebServlet("/ManageOrder")
-public class ManageOrder extends HttpServlet {
+@WebServlet("/CancelOrder")
+public class CancelOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManageOrder() {
+    public CancelOrder() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,16 +33,17 @@ public class ManageOrder extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String orderID = request.getParameter("orderID");
-		OrderItemsDB orderItemsDB = new OrderItemsDB();
-		List<OrderItems> orderItems = OrderItemsDB.getOrderItemsbyOrderID(Integer.parseInt(orderID));
-		OrdersDB ordersDB = new OrdersDB();
-		Orders orders = ordersDB.getOrdersByOrderID(Integer.parseInt(orderID));
-		request.setAttribute("orders", orders);
-		request.setAttribute("orderItems", orderItems);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("ManageOrder.jsp");
-		System.out.println(orderItems.get(0).getCpt().getV().getName());
-		System.out.println("here");
+
+		int cancelOrderID = Integer.parseInt(request.getParameter("cancelOrderID"));
+		OrdersDB orders = new OrdersDB();
+//		List<Orders> order = OrdersDB.getOrdersByOrderID(cancelOrderID);
+//		for(int i=0; i < newOrder.size(); i++) {
+//			if(newOrder.get(i).getId() == cancelOrderID) {
+//				newOrder.remove(i);
+//			}
+//		}
+//		request.setAttribute("order", order);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("CancelOrder.jsp");
 		dispatcher.forward(request, response);
 	}
 

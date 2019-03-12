@@ -48,5 +48,4 @@ public class Orders {
 	public void setCreditCardNumber(String creditCardNumber) {
 		CreditCardNumber = creditCardNumber;
 	}
-	
 }

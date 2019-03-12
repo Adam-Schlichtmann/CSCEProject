@@ -305,7 +305,7 @@ public class DBAccess {
 	}
 	
 	// <---------------Orders------------------>
-	public List<Orders> getOrders(int cID) {
+	public List<Orders> getOrdersByCustomerID(int cID) {
 		List<Orders>  o = new ArrayList<Orders>();
 		String SQL = "SELECT * from orders WHERE CustomerId='"+cID+"'";
 	    Statement stat;
@@ -331,6 +331,31 @@ public class DBAccess {
 		
 	}
 	
+	public Orders getOrdersByOrdersID(int oID) {
+		List<Orders>  o = new ArrayList<Orders>();
+		String SQL = "SELECT * from orders WHERE Id='"+oID+"'";
+	    Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			while (rs.next()){
+				Orders OrderHolder = new Orders();
+				OrderHolder.setId(rs.getInt("Id"));
+				OrderHolder.setTotalCost(rs.getInt("TotalCost"));
+				OrderHolder.setOrderDate(rs.getString("OrderDate"));
+				OrderHolder.setBillingAddress(rs.getString("BillingAddress"));
+				OrderHolder.setCreditCardNumber(rs.getString("CreditCardNumber"));
+				o.add(OrderHolder);
+		    }
+			
+		    stat.close();
+		        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return o.get(0);
+		
+	}
 	
 	public void delOrder(int oID) {
 		String SQL = "DELETE from orders WHERE Id='"+oID+"'";
@@ -348,6 +373,7 @@ public class DBAccess {
 	// <---------------OrderItems------------------>
 	public List<OrderItems> getOrderItemsbyOrderID(int cID) {
 		List<OrderItems>  o = new ArrayList<OrderItems>();
+		CPTValuesDB cptDB = new CPTValuesDB();
 		String SQL = "SELECT * from orderitems WHERE OrderId='"+cID+"'";
 	    Statement stat;
 		try {
@@ -359,6 +385,7 @@ public class DBAccess {
 				OrderItemHolder.setOrderId(rs.getInt("OrderId"));
 				OrderItemHolder.setPerformanceId(rs.getInt("PerformanceId"));
 				OrderItemHolder.setQuantity(rs.getInt("Quantity"));
+				OrderItemHolder.setCpt(cptDB.getCPTData(OrderItemHolder.getPerformanceId()));
 				o.add(OrderItemHolder);
 		    }
 			

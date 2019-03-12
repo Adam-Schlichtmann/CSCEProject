@@ -3,10 +3,18 @@ package model;
 import java.util.List;
 
 public class OrdersDB {
-	public static List<Orders> getOrders(int cID){
+	public static List<Orders> getOrdersByCustomerID(int cID){
 		DBAccess db = new DBAccess();
 		db.connectMeIn();
-		List<Orders> o = db.getOrders(cID);
+		List<Orders> o = db.getOrdersByCustomerID(cID);
+		db.closeConnection();
+		return o;
+	}
+	
+	public static Orders getOrdersByOrderID(int oID){
+		DBAccess db = new DBAccess();
+		db.connectMeIn();
+		Orders o = db.getOrdersByOrdersID(oID);
 		db.closeConnection();
 		return o;
 	}

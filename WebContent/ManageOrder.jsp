@@ -15,7 +15,7 @@
 		  <a href="Login.jsp" style="float:right">Log Out</a>
 		  <a href="ViewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
 		</div>
-		<h1 style="text-align:center">Order #113456</h1>
+		<h1 style="text-align:center">${orders.getId() }</h1>
 		<table style="width:100%" align="center">
 			  	<tr>
 				  	<th></th>
@@ -24,19 +24,18 @@
 				    <th>Venue</th>
 				    <th>Time</th>
 				    <th>Price</th>
-				    <th>Status</th>
 				    <th></th>
 			  	</tr>
-    		    <c:forEach items="${items}" var="items">
+    		    <c:forEach items="${orderItems}" var="item">
 			        <tr>
-			        	<td style="text-align:center"><form action=ConcertSearchResult >
-			        	<input type="hidden" name="venueID" value="${concert.getP().getVenueID()}">
-			        	<button name="detailsButton" type=submit value="${concert.getP().getId()}">View Concert Details</button></form></td>
-			            <td>${item.getC().getConcertName()} </td>
-			            <td>${item.getP()}</td>
-			            <td>${item.getV().getAddress()}</td>
-			            <td>${item.getP().getStarTime()}</td>
-			            <td>${item.getT().getTicketPrice()}</td>
+			        	<td style="text-align:center"><form action=CancelOrder >
+			        	<input type="hidden" name="venueID" value="${item.getCpt().getP().getVenueID()}">
+			        	<button name="detailsButton" type=submit value="${item.getCpt().getP().getId()}">View Concert Details</button></form></td>
+			            <td>${item.getCpt().getC().getConcertName()} </td>
+			            <td>${item.getQuantity()}</td>
+			            <td>${item.getCpt().getV().getName()}</td>
+			            <td>${item.getCpt().getP().getStartTime()}</td>
+			            <td>${item.getCpt().getT().getTicketPrice()}</td>
 			        </tr>
 		   		</c:forEach>
 			    <tr>
@@ -45,7 +44,7 @@
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center">Total </td>
-				    <td style="text-align:center">${orders.getTotalCost() }</td>	
+				    <td style="text-align:center">$ ${orders.getTotalCost() }</td>	
 			    </tr>
 			    <tr>
 			    	<td style="text-align:center"></td>
@@ -53,7 +52,7 @@
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center">Date Order </td>
-				    <td style="text-align:center">${orders.getOrderDate()</td>	
+				    <td style="text-align:center">${orders.getOrderDate()}</td>	
 			    </tr>
 		  	</table>
 	</body>
