@@ -42,17 +42,28 @@ public class UpdateShoppingCart extends HttpServlet {
 		
 		if(!(request.getParameter("selectedConcert") == null)) {
 			addToCart(request);
-		}else if (!request.getParameter("deleteConcert").isEmpty()) {
+			System.out.println("line45");
+
+		}else if (!(request.getParameter("deleteConcert") == null)) {
 			deleteFromCart(request);
+			System.out.println("line49");
+
 		}
+		System.out.println("line52");
 		
 		if(previousCartItems != null ) {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/UpdateShoppingCart");
 			loadConcerts(request); //load concerts variable to be used on front end
 			dispatcher.forward(request, response);
+			System.out.println("line58");
+
 		}else {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/CustomerHomePage.jsp");
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ViewAndCheckoutShoppingCart.jsp");
+			String errorMessage = "Cart is Empty!";
+			request.setAttribute("errorMessage", errorMessage);
 			dispatcher.forward(request, response);
+			System.out.println("line65");
+
 		}
 		
 
