@@ -1,87 +1,48 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mysql.jdbc.Blob;
 
 public class ShoppingCart {
-	private int ConcertID;
-	private int TicketQuantity;
-	private String Performer;
-	private java.sql.Blob Thumbnail;
-	private Date Showtime;
-	private int TicketPrice;
-	private int PerformanceID;
-	private int TicketTypeID;
+	private List<ShoppingCartItem> items;
+	private int TotalPrice;
 	
 	public ShoppingCart() {
 		super();
-	}
-
-	public int getTicketTypeID() {
-		return TicketTypeID;
-	}
-
-	public void setTicketTypeID(int ticketTypeID) {
-		TicketTypeID = ticketTypeID;
-	}
-
-	public int getPerformanceID() {
-		return PerformanceID;
-	}
-
-	public void setPerformanceID(int performanceID) {
-		PerformanceID = performanceID;
-	}
-
-	public int getConcertID() {
-		return ConcertID;
-	}
-
-	public void setConcertID(int concertID) {
-		ConcertID = concertID;
-	}
-
-	public int getTicketQuantity() {
-		return TicketQuantity;
-	}
-
-	public void setTicketQuantity(int ticketQuantity) {
-		TicketQuantity = ticketQuantity;
-	}
-
-	public String getPerformer() {
-		return Performer;
-	}
-
-	public void setPerformer(String performer) {
-		Performer = performer;
-	}
-
-	public java.sql.Blob getThumbnail() {
-		return Thumbnail;
-	}
-
-	public void setThumbnail(java.sql.Blob blob) {
-		Thumbnail = blob;
-	}
-
-	public Date getShowtime() {
-		return Showtime;
-	}
-
-	public void setShowtime(Date showtime) {
-		Showtime = showtime;
-	}
-
-	public int getTicketPrice() {
-		return TicketPrice;
-	}
-
-	public void setTicketPrice(int ticketPrice) {
-		TicketPrice = ticketPrice;
+		items = new ArrayList<ShoppingCartItem>();
 	}
 	
+	public int getTotalPrice() {
+		return TotalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		TotalPrice = totalPrice;
+	}
+
+	public List<ShoppingCartItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<ShoppingCartItem> items) {
+		this.items = items;
+	}
+	
+	public void addToCart(ShoppingCartItem item) {
+		this.items.add(item);
+	}
+	
+	public void calculateNewTotalPrice() {
+		int temp;
+		this.setTotalPrice(0);
+		for(int i=0;i<items.size();i++) {
+			temp = items.get(i).getAmountOfTickets() * items.get(i).getPricePerTicket();
+			this.TotalPrice += temp;
+		}
+	}
 	
 	
 }

@@ -62,7 +62,7 @@
 					  	</select>
 					  	<select name="ticketType">
 					  	<c:forEach items="${seats}" var="tickets">
-					  		<option value="${tickets.getTicketPrice()}">${tickets.getSeatName()}</option>
+					  		<option value="${tickets.getTicketVenuePricesID()}">${tickets.getSeatName()}</option>
 					  	</c:forEach>
 					  		
 						</select>

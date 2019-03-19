@@ -252,58 +252,58 @@ public class DBAccess {
 	}
 	
 	
-	// <---------------ShoppingCart------------------>
-	public List<ShoppingCart> getShoppingCartbyOID(int oID, int TID) {
-		List<ShoppingCart>  o = new ArrayList<ShoppingCart>();
-		String SQL = "SELECT * from orderitmes WHERE OrderId='"+oID+"'";
-	    Statement stat;
-		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
-			while (rs.next()){
-				ShoppingCart SCHolder = new ShoppingCart();
-				SCHolder.setTicketQuantity(rs.getInt("Quantity"));
-				SCHolder.setPerformanceID(rs.getInt("PerformanceID"));
-				o.add(SCHolder);
-		    }
-			for(int i=0; i< o.size(); i++) {
-				SQL = "Select * from performance WHERE Id='" + o.get(i).getPerformanceID() + "'";
-				rs = stat.executeQuery(SQL);
-				while (rs.next()){
-					o.get(i).setShowtime(rs.getDate("StartTime"));
-					o.get(i).setConcertID(rs.getInt("concertID"));
-				}
-			}
-			
-			for(int i=0; i< o.size(); i++) {
-				SQL = "Select * from concert WHERE Id='" + o.get(i).getConcertID() + "'";
-				rs = stat.executeQuery(SQL);
-				while (rs.next()){
-					o.get(i).setPerformer(rs.getString("ConcertName"));
-					o.get(i).setThumbnail(rs.getBlob("Thumbnail")); 
-				}
-			}
-			
-			for(int i=0; i< o.size(); i++) {
-				SQL = "Select * from TicketVenuePrice WHERE performanceID='" + 
-							o.get(i).getPerformanceID() + "' AND ticketTypeID='" + TID +"'";
-				rs = stat.executeQuery(SQL);
-				while (rs.next()){
-					o.get(i).setTicketPrice(rs.getInt("TicketPrice"));
-					o.get(i).setTicketTypeID(TID);
-				}
-			}
-			
-			
-		    stat.close();
-		        
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return o;
-		
-	}
-	
+//	// <---------------ShoppingCart------------------>
+//	public List<ShoppingCart> getShoppingCartbyOID(int oID, int TID) {
+//		List<ShoppingCart>  o = new ArrayList<ShoppingCart>();
+//		String SQL = "SELECT * from orderitmes WHERE OrderId='"+oID+"'";
+//	    Statement stat;
+//		try {
+//			stat = conn.createStatement();
+//			ResultSet rs = stat.executeQuery(SQL);
+//			while (rs.next()){
+//				ShoppingCart SCHolder = new ShoppingCart();
+//				SCHolder.setTicketQuantity(rs.getInt("Quantity"));
+//				SCHolder.setPerformanceID(rs.getInt("PerformanceID"));
+//				o.add(SCHolder);
+//		    }
+//			for(int i=0; i< o.size(); i++) {
+//				SQL = "Select * from performance WHERE Id='" + o.get(i).getPerformanceID() + "'";
+//				rs = stat.executeQuery(SQL);
+//				while (rs.next()){
+//					o.get(i).setShowtime(rs.getDate("StartTime"));
+//					o.get(i).setConcertID(rs.getInt("concertID"));
+//				}
+//			}
+//			
+//			for(int i=0; i< o.size(); i++) {
+//				SQL = "Select * from concert WHERE Id='" + o.get(i).getConcertID() + "'";
+//				rs = stat.executeQuery(SQL);
+//				while (rs.next()){
+//					o.get(i).setPerformer(rs.getString("ConcertName"));
+//					o.get(i).setThumbnail(rs.getBlob("Thumbnail")); 
+//				}
+//			}
+//			
+//			for(int i=0; i< o.size(); i++) {
+//				SQL = "Select * from TicketVenuePrice WHERE performanceID='" + 
+//							o.get(i).getPerformanceID() + "' AND ticketTypeID='" + TID +"'";
+//				rs = stat.executeQuery(SQL);
+//				while (rs.next()){
+//					o.get(i).setTicketPrice(rs.getInt("TicketPrice"));
+//					o.get(i).setTicketTypeID(TID);
+//				}
+//			}
+//			
+//			
+//		    stat.close();
+//		        
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return o;
+//		
+//	}
+//	
 	// <---------------Orders------------------>
 	public List<Orders> getOrdersByCustomerID(int cID) {
 		List<Orders>  o = new ArrayList<Orders>();

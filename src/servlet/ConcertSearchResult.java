@@ -68,11 +68,12 @@ public class ConcertSearchResult extends HttpServlet {
 			TicketNPrices TicketNPricesHolder = new TicketNPrices();
 			TicketNPricesHolder.setSeatName(t.get(j).getSeatName());
 			TicketNPricesHolder.setTicketPrice(tickets.get(j).getTicketPrice());
+			TicketNPricesHolder.setTicketTypeID(tickets.get(j).getTicketTypeID());
+			TicketNPricesHolder.setTicketVenuePricesID(tickets.get(j).getIdTicketVenuePrices());
 			tp.add(TicketNPricesHolder);
 		}
 		request.setAttribute("seats", tp);
-		
-		;
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ConcertDetailsSelection.jsp");
 		dispatcher.forward(request, response);
 	}

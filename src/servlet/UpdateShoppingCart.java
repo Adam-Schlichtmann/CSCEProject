@@ -13,9 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import model.CPTValues;
+import model.CPTValuesDB;
 import model.Concerts;
 import model.ShoppingCart;
 import model.ShoppingCartDB;
+import model.ShoppingCartItem;
 
 /**
  * Servlet implementation class UpdateShoppingCart
@@ -37,28 +40,30 @@ public class UpdateShoppingCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		List<List<ShoppingCart>> previousCartItems = (ArrayList<List<ShoppingCart>>)session.getAttribute("cart");
-
+		ShoppingCart previousCartItems = (ShoppingCart)session.getAttribute("cart");
 		
 		if(!(request.getParameter("selectedConcert") == null)) {
-			addToCart(request);
 			System.out.println("line45");
+			addToCart(request);
+			previousCartItems = (ShoppingCart)session.getAttribute("cart");
 
 		}else if (!(request.getParameter("deleteConcert") == null)) {
-			deleteFromCart(request);
 			System.out.println("line49");
-
+			deleteFromCart(request);
+			previousCartItems = (ShoppingCart)session.getAttribute("cart");
 		}
 		System.out.println("line52");
 		
-		if(previousCartItems != null ) {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/UpdateShoppingCart");
-			loadConcerts(request); //load concerts variable to be used on front end
-			dispatcher.forward(request, response);
+		if(previousCartItems != null) {
 			System.out.println("line58");
-
+			RequestDispatcher dispatcher = request.getRequestDispatcher("ViewAndCheckoutShoppingCart.jsp");
+			if(previousCartItems.getItems() !=null) {
+				loadConcerts(request); //load concerts variable to be used on front end
+				
+			}
+			dispatcher.forward(request, response);
 		}else {
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ViewAndCheckoutShoppingCart.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("ViewAndCheckoutShoppingCart.jsp");
 			String errorMessage = "Cart is Empty!";
 			request.setAttribute("errorMessage", errorMessage);
 			dispatcher.forward(request, response);
@@ -79,59 +84,72 @@ public class UpdateShoppingCart extends HttpServlet {
 	
 	private void loadConcerts(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		List<List<ShoppingCart>> previousCartItems = (ArrayList<List<ShoppingCart>>)session.getAttribute("cart");
-		List<ShoppingCart> concerts = new ArrayList<ShoppingCart>();
-		ShoppingCart cart = new ShoppingCart();
-		ShoppingCartDB cartDB = new ShoppingCartDB();
-		for(int i = 0 ; i< previousCartItems.size();i++) {
-			//iterate over the cart items to obtain the concert ID to pass over to the shopping cart page
-			// perform db look up for concert object based on ID
-			//concerts.add(previousCartItems.get(i).get(0));
-		}
-		request.setAttribute("concerts", concerts);
+		ShoppingCart previousCart = (ShoppingCart)session.getAttribute("cart");
+		request.setAttribute("cart", previousCart);
+		request.setAttribute("cartItems", previousCart.getItems());
 	}
 
 	private void deleteFromCart(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		List<List<String>> previousCartItems = (ArrayList<List<String>>)session.getAttribute("cart");
-		String selectedConcert = request.getParameter("concertID");
+		ShoppingCart previousCartItems = (ShoppingCart)session.getAttribute("cart");
+		int deleteConcertID = Integer.parseInt(request.getParameter("deleteConcert"));
 		
 		if(previousCartItems != null) {
-			for(int i = 0 ; i< previousCartItems.size();i++) {
-				if(previousCartItems.get(i).contains(selectedConcert)) {
-					previousCartItems.remove(i);
+			for(int i = 0 ; i< previousCartItems.getItems().size();i++) {
+				if(previousCartItems.getItems().get(i).getCpt().getP().getId() == deleteConcertID) {
+					previousCartItems.getItems().remove(i);
 				}
 			}
+			previousCartItems.calculateNewTotalPrice();
 			session.setAttribute("cart", previousCartItems);
 			
 		}else {
 			System.out.println("Empty Cart, cant delete");
 		}
 		
+		if(previousCartItems == null) {
+			session.setAttribute("cart", null);
+			
 		}
+		
+	}
 	
 	private void addToCart(HttpServletRequest request)
 			throws ServletException, IOException {
-		// CONCERTS ARE STORED IN CACHE IN THIS FORMAT
-		// Cart is a 2D array
-		// cart[x][y], y has a length of 3 (concertID, numberOfTickets, Ticket type)
+
 		HttpSession session = request.getSession();
-		String selectedConcert = request.getParameter("concertID");
-		String numOfTickets = request.getParameter("ticketQuantity");
-		String ticketType = request.getParameter("ticketType");
-		List<ShoppingCart> concerts = new ArrayList<ShoppingCart>();
-		ShoppingCart cart = new ShoppingCart();
-		ShoppingCartDB cartDB = new ShoppingCartDB();
-		List<List<ShoppingCart>> temp = new ArrayList<List<ShoppingCart>>();
-		List<ShoppingCart> tempConcert = ShoppingCartDB.getShoppingCartByOrderIDAndTicketTypeID(Integer.parseInt(selectedConcert), Integer.parseInt(ticketType));
-		temp.add(tempConcert);
-		List<List<ShoppingCart>> previousCartItems = (ArrayList<List<ShoppingCart>>)session.getAttribute("cart");
-		if (previousCartItems.isEmpty()) {
-			previousCartItems = new ArrayList<List<ShoppingCart>>();
-			previousCartItems.addAll(temp);
-			session.setAttribute("cart", temp);
+		String selectedConcert = request.getParameter("selectedConcert");
+		int numOfTickets = Integer.parseInt(request.getParameter("ticketQuantity"));
+		String TicketVenuePricesID = request.getParameter("ticketType");
+
+		CPTValuesDB cptValuesDB = new CPTValuesDB();
+		ShoppingCart previousCartItems = (ShoppingCart)session.getAttribute("cart");
+		
+		if (previousCartItems == null) {
+			ShoppingCart cart = new ShoppingCart();
+			ShoppingCartItem cartItemHolder = new ShoppingCartItem();
+			CPTValues cptHolder = new CPTValues();
+			cptHolder = cptValuesDB.getCPTData(Integer.parseInt(selectedConcert));
+			
+			cartItemHolder.setCpt(cptHolder);
+			cartItemHolder.setAmountOfTickets(numOfTickets);
+			cartItemHolder.setPricePerTicket(cptHolder.getT().getTicketPrice());
+			cartItemHolder.setTotalPrice(cartItemHolder.getAmountOfTickets()*cartItemHolder.getPricePerTicket());
+			cart.addToCart(cartItemHolder);
+			cart.calculateNewTotalPrice();
+			session.setAttribute("cart", cart);
 		}else {
-			previousCartItems.addAll(temp);
+			ShoppingCartItem cartItemHolder = new ShoppingCartItem();
+			CPTValues cptHolder = new CPTValues();
+			cptHolder = cptValuesDB.getCPTData(Integer.parseInt(selectedConcert));
+			
+			cartItemHolder.setCpt(cptHolder);
+			cartItemHolder.setAmountOfTickets(numOfTickets);
+			cartItemHolder.setPricePerTicket(cptHolder.getT().getTicketPrice());
+			cartItemHolder.setTotalPrice(cartItemHolder.getAmountOfTickets()*cartItemHolder.getPricePerTicket());
+			
+			previousCartItems.addToCart(cartItemHolder);
+			previousCartItems.calculateNewTotalPrice();
 			session.setAttribute("cart", previousCartItems);
 		}
 	}

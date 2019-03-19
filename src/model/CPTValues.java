@@ -43,8 +43,5 @@ public class CPTValues {
 	public void setT(TicketVenuePrices t) {
 		this.t = t;
 	}
-
-
-
 	
 }
