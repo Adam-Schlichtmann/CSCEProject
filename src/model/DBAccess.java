@@ -475,6 +475,23 @@ public class DBAccess {
 		}
 	}
 	
+	public void addOrderItem(OrderItems o) {
+		int oID = o.getOrderId();
+		int pID = o.getPerformanceId();
+		int quantity = o.getQuantity();
+		try {
+			stmt = conn.createStatement();
+			String sql;
+			sql = "INSERT INTO orderitems (OrderId, PerformanceID, Quantity)" +
+			          "VALUES ('" + oID +
+					  "', '" + pID + 
+					  "', '" + quantity +"')";
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	// <---------------CreditCards------------------>
 	
