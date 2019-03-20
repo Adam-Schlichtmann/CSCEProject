@@ -1,10 +1,12 @@
 package model;
 
+import java.sql.Date;
+
 public class Orders {
 	private int Id;
 	private int CustomerId;
 	private int TotalCost;
-	private String OrderDate;
+	private Date OrderDate;
 	private String BillingAddress;
 	private String CreditCardNumber;
 	
@@ -30,10 +32,10 @@ public class Orders {
 	public void setTotalCost(int totalCost) {
 		TotalCost = totalCost;
 	}
-	public String getOrderDate() {
+	public Date getOrderDate() {
 		return OrderDate;
 	}
-	public void setOrderDate(String orderDate) {
+	public void setOrderDate(Date orderDate) {
 		OrderDate = orderDate;
 	}
 	public String getBillingAddress() {

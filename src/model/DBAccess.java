@@ -334,7 +334,7 @@ public class DBAccess {
 				Orders OrderHolder = new Orders();
 				OrderHolder.setId(rs.getInt("Id"));
 				OrderHolder.setTotalCost(rs.getInt("TotalCost"));
-				OrderHolder.setOrderDate(rs.getString("OrderDate"));
+				OrderHolder.setOrderDate(rs.getDate("OrderDate"));
 				OrderHolder.setBillingAddress(rs.getString("BillingAddress"));
 				OrderHolder.setCreditCardNumber(rs.getString("CreditCardNumber"));
 				o.add(OrderHolder);
@@ -360,7 +360,7 @@ public class DBAccess {
 				Orders OrderHolder = new Orders();
 				OrderHolder.setId(rs.getInt("Id"));
 				OrderHolder.setTotalCost(rs.getInt("TotalCost"));
-				OrderHolder.setOrderDate(rs.getString("OrderDate"));
+				OrderHolder.setOrderDate(rs.getDate("OrderDate"));
 				OrderHolder.setBillingAddress(rs.getString("BillingAddress"));
 				OrderHolder.setCreditCardNumber(rs.getString("CreditCardNumber"));
 				o.add(OrderHolder);
@@ -388,16 +388,21 @@ public class DBAccess {
 		}
 	}
 	
-	public void createOrder(Integer CustomerId, Integer TotalCost, Date OrderDate, String BillingAddress, Integer CreditCardNumber) {
+	public void createOrder(Orders o) {
+		int cID = o.getCustomerId();
+		int TC = o.getTotalCost();
+		Date day = o.getOrderDate();
+		String billAdd = o.getBillingAddress();
+		String CCN = o.getCreditCardNumber();
 		try {
 			stmt = conn.createStatement();
 			String sql;
-			sql = "INSERT INTO users (CustomerId, TotalCost, OrderDate, BillingAddress, CreditCardNumber)" +
-			          "VALUES ('" + CustomerId +
-					  "', '" + TotalCost + 
-					  "', '" + OrderDate + 
-					  "', '" + BillingAddress + 
-					  "', '" + CreditCardNumber +"')";
+			sql = "INSERT INTO orders (CustomerId, TotalCost, OrderDate, BillingAddress, CreditCardNumber)" +
+			          "VALUES ('" + cID +
+					  "', '" + TC + 
+					  "', '" + day + 
+					  "', '" + billAdd + 
+					  "', '" + CCN +"')";
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -500,7 +505,7 @@ public class DBAccess {
 		return c;
 	}
 	
-	public void updateBalance(int cID, Double cost){
+	public void updateBalance(int cID, double cost){
 		String SQL = "SELECT Balance from creditcards WHERE UserId='"+cID+"'";
 	    Statement stat;
 	    Double balance;

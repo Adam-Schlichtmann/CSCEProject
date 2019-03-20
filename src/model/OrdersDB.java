@@ -25,4 +25,11 @@ public class OrdersDB {
 		db.delOrder(oID);
 		db.closeConnection();
 	}
+	
+	public static void createOrder(Orders o){
+		DBAccess db = new DBAccess();
+		db.connectMeIn();
+		db.createOrder(o);
+		db.closeConnection();
+	}
 }

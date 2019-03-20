@@ -11,4 +11,11 @@ public class CreditCardsDB {
 		return c;
 	}
 	
+	public static void updatebalance(int cID, double cost) {
+		DBAccess db = new DBAccess();
+		db.connectMeIn();
+		db.updateBalance(cID, cost);
+		db.closeConnection();
+	}
+	
 }

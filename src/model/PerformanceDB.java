@@ -19,4 +19,11 @@ public class PerformanceDB {
 		db.closeConnection();
 		return p;
 	}
+	
+	public static void updateTicketsByPID(int pID, int tickets){
+		DBAccess db = new DBAccess();
+		db.connectMeIn();
+		db.updateRemainingTickets(pID, tickets);;
+		db.closeConnection();
+	}
 }
