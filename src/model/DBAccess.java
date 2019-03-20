@@ -135,6 +135,24 @@ public class DBAccess {
 		
 	}
 	
+	public void updateRemainingTickets(int pID, int tickets){
+		String SQL = "SELECT remainingTickets from performance WHERE Id='"+pID+"'";
+	    Statement stat;
+	    int remaining;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			rs.next();
+			remaining = rs.getInt("remainingSeats");
+			remaining = remaining - tickets;
+			SQL = "UPDATE performance SET remainingSeats='"+ remaining+"' WHERE Id='"+pID+"'";
+			stat.executeUpdate(SQL);
+		    stat.close();   
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// <---------------Concerts------------------>
 	public Concerts getConcertBypID(int pID) {
 		Concerts c  = new Concerts();
@@ -370,6 +388,22 @@ public class DBAccess {
 		}
 	}
 	
+	public void createOrder(Integer CustomerId, Integer TotalCost, Date OrderDate, String BillingAddress, Integer CreditCardNumber) {
+		try {
+			stmt = conn.createStatement();
+			String sql;
+			sql = "INSERT INTO users (CustomerId, TotalCost, OrderDate, BillingAddress, CreditCardNumber)" +
+			          "VALUES ('" + CustomerId +
+					  "', '" + TotalCost + 
+					  "', '" + OrderDate + 
+					  "', '" + BillingAddress + 
+					  "', '" + CreditCardNumber +"')";
+			stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// <---------------OrderItems------------------>
 	public List<OrderItems> getOrderItemsbyOrderID(int cID) {
 		List<OrderItems>  o = new ArrayList<OrderItems>();
@@ -465,6 +499,27 @@ public class DBAccess {
 		}
 		return c;
 	}
+	
+	public void updateBalance(int cID, Double cost){
+		String SQL = "SELECT Balance from creditcards WHERE UserId='"+cID+"'";
+	    Statement stat;
+	    Double balance;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			rs.next();
+			balance = rs.getDouble("Balance");
+			balance = balance - cost;
+			SQL = "UPDATE creditcards SET Balance='"+ balance+"' WHERE UserId='"+cID+"'";
+			stat.executeUpdate(SQL);
+		    stat.close();
+		        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	// <---------------TicketTypes------------------>
 		public TicketTypes getTicketTypesbyID(int tID) {
