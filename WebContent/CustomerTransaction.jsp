@@ -25,31 +25,14 @@
 				    <th>Time</th>
 				    <th>Price</th>
 			  	</tr>
-			  	<tr>
-			  		<td style="text-align:center"><form action="ConcertDetailsSelection.jsp"><input type=submit value="Details"></form></td>
-				    <td style="text-align:center">Mac Miller</td>
-				    <td style="text-align:center">14</td>
-				    <td style="text-align:center">The Bourbon Theater</td>
-				    <td style="text-align:center">7:00pm</td>
-				    <td style="text-align:center">$240.00</td>	    	
-			    </tr>
-			    <tr>
-			  		<td style="text-align:center"><form action="ConcertDetailsSelection.jsp"><input type=submit value="Details"></form></td>
-			  		<td style="text-align:center">6LACK</td>
-			  		<td style="text-align:center">60</td>
-				    <td style="text-align:center">The Bourbon Theater</td>
-				    <td style="text-align:center">7:00pm</td>
-				    <td style="text-align:center">$120.00</td>		    	
-			    </tr>
-				<c:forEach items="${concerts}" var="concert">
+				<c:forEach items="${cartItems}" var="cartItem">
 			        <tr>
-			        	<td style="text-align:center"><form action=ConcertSearchResult><button name="detailsButton" type=submit value="${$cpt.c.id}">View Concert Details</button></form></td>
-		            	<td><c:out value="${cpt.c.getDescription()}" />${cpt.c.getDescription()}</td>
-			            <td><c:out value="${cpt.p.StartTime}"/>${cpt.p.StartTime}</td>
-			            <td><c:out value="${cpt.t.price}"/>${cpt.t.price}</td>
-			            <td><c:out value="${cpt.p.remainingSeats}"/>${concert.performance.remainingSeats}</td>
-			            <td><c:out value="${cpt.c.Thumbnail}"/>NO IMAGE ${concert.image}</td>
-			            <td style="text-align:center"><form action=UpdateShoppingCart><button name="deleteConcert" type=submit value=1>Remove</button></form></td>
+			        	<td style="text-align:center"><form action=ConcertSearchResult><button name="detailsButton" type=submit value="${cartItem.getCpt().getP().getId()}">View Concert Details</button></form></td>
+		            	<td><c:out value="${cartItem.getCpt().c.getConcertName()}" /></td>
+			            <td><c:out value="${cartItem.getCpt().p.getRemainingSeats()}"/></td>
+			            <td><c:out value="${cartItem.getCpt().v.getName()}"/></td>
+			            <td><c:out value="${cartItem.getCpt().p.getStartTime()}"/></td>
+			            <td><c:out value="$ ${cartItem.getTotalPrice()}"/></td>
 			        </tr>
 		    	</c:forEach>
 			    <tr>

@@ -221,24 +221,26 @@ public class DBAccess {
 	}
 	
 	public Venue getVenueByID(int id) {
-		Venue v  = new Venue();
+		Venue VenueHolder = new Venue();
 		String SQL = "SELECT * from venue WHERE Id='"+id+"'";
 	    Statement stat;
-		try {
+	    try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(SQL);
-			v.setName(rs.getString("Name"));
-			v.setAddress(rs.getString("Address"));
-			v.setCity(rs.getString("City"));
-			v.setState(rs.getString("State"));
-			v.setPostalCode(rs.getString("PostalCode"));
-
+			while (rs.next()){
+				VenueHolder.setName(rs.getString("Name"));
+				VenueHolder.setAddress(rs.getString("Address"));
+				VenueHolder.setCity(rs.getString("City"));
+				VenueHolder.setState(rs.getString("State"));
+				VenueHolder.setPostalCode(rs.getString("PostalCode"));
+		    }
+			
 		    stat.close();
 		        
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return v;
+		return VenueHolder;
 		
 	}
 	

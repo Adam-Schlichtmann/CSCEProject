@@ -85,8 +85,8 @@ public class UpdateShoppingCart extends HttpServlet {
 	private void loadConcerts(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		ShoppingCart previousCart = (ShoppingCart)session.getAttribute("cart");
-		request.setAttribute("cart", previousCart);
-		request.setAttribute("cartItems", previousCart.getItems());
+		session.setAttribute("cart", previousCart);
+		session.setAttribute("cartItems", previousCart.getItems());
 	}
 
 	private void deleteFromCart(HttpServletRequest request) {
@@ -137,6 +137,7 @@ public class UpdateShoppingCart extends HttpServlet {
 			cartItemHolder.setTotalPrice(cartItemHolder.getAmountOfTickets()*cartItemHolder.getPricePerTicket());
 			cart.addToCart(cartItemHolder);
 			cart.calculateNewTotalPrice();
+			System.out.println(cartItemHolder.getCpt().getC().getThumbnail());
 			session.setAttribute("cart", cart);
 		}else {
 			ShoppingCartItem cartItemHolder = new ShoppingCartItem();

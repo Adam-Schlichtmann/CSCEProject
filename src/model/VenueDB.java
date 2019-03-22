@@ -11,6 +11,15 @@ public class VenueDB {
 		db.closeConnection();
 		return c;
 	}
+	
+	public static Venue getVenueByID(int id) {
+		DBAccess db = new DBAccess();
+		db.connectMeIn();
+		Venue v = db.getVenueByID(id);
+		db.closeConnection();
+		return v;
+	}
+	
 	public static List<Venue> getAllVenues(){
 		DBAccess db = new DBAccess();
 		db.connectMeIn();
