@@ -42,14 +42,20 @@ public class DBAccess {
 		  int rating = r.getRating();
 		  String review = r.getReview();
 		  
+		  
 
 		  sql = "INSERT INTO customerreviews (concertID, userID, ReviewDate, Rating, Review)" +
-		          "VALUES ('" + concertID +
-				  "', '" + userID + 
-				  "', '" + reviewDate + 
-				  "', '" + rating + 
-				  "', '" + review + "')";
-		  stmt.executeUpdate(sql);
+		          "VALUES (? ? ? ? ?)";
+		  
+		  ps = conn.prepareStatement(sql);
+		  ps.setInt(1, concertID);
+		  ps.setInt(2, userID);
+		  ps.setString(3, reviewDate);
+		  ps.setInt(4, rating);
+		  ps.setString(5, review);
+		  ps.executeQuery();
+		  
+		  // stmt.executeUpdate(sql);
 		  
 		  
 		  } catch (SQLException e) {
