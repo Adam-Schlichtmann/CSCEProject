@@ -370,6 +370,7 @@ public class DBAccess {
 				OrderHolder.setTotalCost(rs.getInt("TotalCost"));
 				OrderHolder.setOrderDate(rs.getDate("OrderDate"));
 				OrderHolder.setBillingAddress(rs.getString("BillingAddress"));
+				OrderHolder.setShippingAddress(rs.getString("ShippingAddress"));
 				OrderHolder.setCreditCardNumber(rs.getString("CreditCardNumber"));
 				o.add(OrderHolder);
 		    }
