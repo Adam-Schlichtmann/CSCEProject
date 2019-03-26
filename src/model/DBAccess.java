@@ -408,13 +408,16 @@ public class DBAccess {
 			stmt = conn.createStatement();
 			String sql;
 			sql = "INSERT INTO orders (CustomerId, TotalCost, OrderDate, BillingAddress, ShippingAddress, CreditCardNumber)" +
-			          "VALUES ('" + cID +
-					  "', '" + TC + 
-					  "', '" + day + 
-					  "', '" + billAdd + 
-					  "', '" + shippAdd + 
-					  "', '" + CCN +"')";
-			stmt.executeUpdate(sql);
+			          "VALUES (? ? ? ? ? ?)";
+			  ps = conn.prepareStatement(sql);
+			  ps.setInt(1, cID);
+			  ps.setInt(2, TC);
+			  ps.setDate(3, day);
+			  ps.setString(4, billAdd);
+			  ps.setString(5, shippAdd);
+			  ps.setString(6, CCN);
+			  ps.executeQuery();
+			// stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -494,10 +497,14 @@ public class DBAccess {
 			stmt = conn.createStatement();
 			String sql;
 			sql = "INSERT INTO orderitems (OrderId, PerformanceID, Quantity)" +
-			          "VALUES ('" + oID +
-					  "', '" + pID + 
-					  "', '" + quantity +"')";
-			stmt.executeUpdate(sql);
+			          "VALUES (? ? ?)";
+			  ps = conn.prepareStatement(sql);
+			  ps.setInt(1, oID);
+			  ps.setInt(2, pID);
+			  ps.setInt(3, quantity);
+			  ps.executeQuery();
+			  
+			// stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -688,11 +695,15 @@ public class DBAccess {
 		  
 
 		  sql = "INSERT INTO users (FirstName, LastName, Username, Password)" +
-		          "VALUES ('" + firstName +
-				  "', '" + lastName + 
-				  "', '" + userName + 
-				  "', '" + password + "')";
-		  stmt.executeUpdate(sql);
+		          "VALUES (? ? ? ?)";
+		  ps = conn.prepareStatement(sql);
+		  ps.setString(1, firstName);
+		  ps.setString(2, lastName);
+		  ps.setString(3, userName);
+		  ps.setString(4, password);
+		  ps.executeQuery();
+		  
+		  // stmt.executeUpdate(sql);
 		  
 		  
 		  } catch (SQLException e) {
