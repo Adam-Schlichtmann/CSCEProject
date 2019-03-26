@@ -23,6 +23,9 @@ public class UsersDB {
     
     public static boolean validateUserByPassword(String password) {
 	    boolean passwordMatches = false;
+	    if(password == null) {
+	    	return false;
+	    }
    	    DBAccess db = new DBAccess();
    	    db.connectMeIn();
    	    passwordMatches = db.findUserByPassword(password);
@@ -36,6 +39,15 @@ public class UsersDB {
 	   	DBAccess db = new DBAccess();
 	   	db.connectMeIn();
 	   	Users aUser = db.returnUserByUsername(aUserName);
+	   	db.closeConnection();
+	   	
+	   	return aUser;
+    }
+    
+    public Users getUserByID(int userID) {   
+	   	DBAccess db = new DBAccess();
+	   	db.connectMeIn();
+	   	Users aUser = db.getUserByID(userID);
 	   	db.closeConnection();
 	   	
 	   	return aUser;

@@ -7,6 +7,7 @@ public class Orders {
 	private int CustomerId;
 	private int TotalCost;
 	private Date OrderDate;
+	private String ShippingAddress;
 	private String BillingAddress;
 	private String CreditCardNumber;
 	
@@ -49,5 +50,13 @@ public class Orders {
 	}
 	public void setCreditCardNumber(String creditCardNumber) {
 		CreditCardNumber = creditCardNumber;
+	}
+
+	public String getShippingAddress() {
+		return ShippingAddress;
+	}
+
+	public void setShippingAddress(String shippingAddress) {
+		ShippingAddress = shippingAddress;
 	}
 }

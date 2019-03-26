@@ -395,15 +395,17 @@ public class DBAccess {
 		int TC = o.getTotalCost();
 		Date day = o.getOrderDate();
 		String billAdd = o.getBillingAddress();
+		String shippAdd = o.getShippingAddress();
 		String CCN = o.getCreditCardNumber();
 		try {
 			stmt = conn.createStatement();
 			String sql;
-			sql = "INSERT INTO orders (CustomerId, TotalCost, OrderDate, BillingAddress, CreditCardNumber)" +
+			sql = "INSERT INTO orders (CustomerId, TotalCost, OrderDate, BillingAddress, ShippingAddress, CreditCardNumber)" +
 			          "VALUES ('" + cID +
 					  "', '" + TC + 
 					  "', '" + day + 
 					  "', '" + billAdd + 
+					  "', '" + shippAdd + 
 					  "', '" + CCN +"')";
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -522,6 +524,32 @@ public class DBAccess {
 			e.printStackTrace();
 		}
 		return c;
+	}
+	
+	public CreditCards getCreditCardByCreditCardNumber(long ccNumber){
+		CreditCards CreditHolder = new CreditCards();
+		String SQL = "SELECT * from creditcards WHERE CreditCardNumber='"+ccNumber+"'";
+	    Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			while (rs.next()){
+				CreditHolder.setId(rs.getInt("Id"));
+				CreditHolder.setCardHolderName(rs.getString("CardHolderName"));
+				CreditHolder.setBalance(rs.getDouble("Balance"));
+				CreditHolder.setCardType(rs.getString("CardType"));
+				CreditHolder.setUserId(rs.getInt("UserId"));
+				CreditHolder.setCVV(rs.getString("CVV"));
+				CreditHolder.setExpirationDate(rs.getDate("ExpirationDate"));
+				CreditHolder.setCreditCardNumber("CreditCardNumber");
+		    }
+			
+		    stat.close();
+		        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return CreditHolder;
 	}
 	
 	public void updateBalance(int cID, double cost){
@@ -741,18 +769,20 @@ public class DBAccess {
 		try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(SQL);
-			user.setFirstName(rs.getString("FirstName"));
-			user.setLastName(rs.getString("LastName"));
-			user.setAddress(rs.getString("Address"));
-			user.setBirthday(rs.getString("Birthday"));
-			user.setCity(rs.getString("City"));
-			user.setPassword(rs.getString("Password"));
-			user.setPhoneNumber(rs.getString("PhoneNumber"));
-			user.setUserName(rs.getString("Username"));
-		    user.setState(rs.getString("State"));
-		    user.setPostalCode(rs.getString("PostalCode"));
+			while (rs.next()){
+				user.setFirstName(rs.getString("FirstName"));
+				user.setLastName(rs.getString("LastName"));
+				user.setAddress(rs.getString("Address"));
+				user.setBirthday(rs.getString("Birthday"));
+				user.setCity(rs.getString("City"));
+				user.setPassword(rs.getString("Password"));
+				user.setPhoneNumber(rs.getString("PhoneNumber"));
+				user.setUserName(rs.getString("Username"));
+			    user.setState(rs.getString("State"));
+			    user.setPostalCode(rs.getString("PostalCode"));
+			    user.setId(Integer.parseInt(rs.getString("iD")));
+			}
 			stat.close();
-		        
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -48,12 +48,13 @@ public class ConcertSearchResult extends HttpServlet {
         
         
 		int performanceID = Integer.parseInt(request.getParameter("detailsButton"));
-		int vID = Integer.parseInt(request.getParameter("venueID"));
+		
 		cpt =cptDB.getCPTData(performanceID);
 		
 		review = reviewDB.getReview(cpt.getC().getId());
 		List<TicketVenuePrices> tickets = new ArrayList<TicketVenuePrices>();
-		tickets = TicketVenuePricesDB.getTicketTypesbyPID(performanceID, vID);
+		System.out.println(cpt.getP().getVenueID());
+		tickets = TicketVenuePricesDB.getTicketTypesbyPID(performanceID, cpt.getP().getVenueID());
 		
 		request.setAttribute("cpt", cpt);
 		request.setAttribute("review", review);

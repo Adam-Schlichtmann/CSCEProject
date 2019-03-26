@@ -23,13 +23,21 @@ public class Users {
 	private String Birthday;
 	private String Username;
 	private String Password;
-	
+	private int id;
 	
 	
 	public Users() {
 		super();
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getFirstName() {
 		return FirstName;
 	}

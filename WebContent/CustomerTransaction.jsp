@@ -47,32 +47,28 @@
 			<table align="center">
 			<tr>
 				<td>
-					<form style="text-align:center" name="paymentForm"   >
-						First Name: <input type=text name=userName style="margin:10px" placeholder="John"><br>
-						Last Name: <input type=text name=userName style="margin:10px" placeholder="Doe"><br>
+					<form style="text-align:center" name="paymentForm"  action="CustomerTransactionConfirmation" >
+						First Name: <input type=text name=firstName style="margin:10px" placeholder="John"><br>
+						Last Name: <input type=text name=lastName style="margin:10px" placeholder="Doe"><br>
 						<table>
 							<tr>Card Type : </tr>
 							<tr>
-									<select name='card' id='card'>
-									    <option value=''>Card</option>
-									    <option value='Visa'>Visa</option>
-									    <option value='Mastercard'>MasterCard</option>
-									    <option value='Discover'>Discover</option>
-									</select>
+								<select name='cardType' id='card'>
+								    <option value=''>Card</option>
+								    <option value='Visa'>Visa</option>
+								    <option value='MasterCard'>MasterCard</option>
+								    <option value='Discover'>Discover</option>
+								</select>
 							</tr>
 							<br>
 							<br>
 							<tr>
-								<form>
-									Card Number: <input type=text name="cardNumber" value="CardNumber">
-								</form>
+								Card Number: <input type=text name="cardNumber" >
 							</tr>
 							<br>
 							<br>
 							<tr>
-								<form>
-									Security code: <input type=text name="sec" value="security code">
-								</form>
+								Security code: <input type=text name="sec" >
 							</tr>
 							<br>
 							<tr>Expiration Date : </tr>
@@ -94,24 +90,29 @@
 									</select>
 									<select name='expireYY' id='expireYY' style="margin:10px">
 									    <option value=''>Year</option>
-									    <option value='10'>2010</option>
-									    <option value='11'>2011</option>
-									    <option value='12'>2012</option>
+									    <option value='10'>2019</option>
+									    <option value='11'>2020</option>
+									    <option value='12'>2021</option>
+									    <option value='12'>2022</option>
+									    <option value='12'>2023</option>
+									    <option value='12'>2024</option>
+									    <option value='12'>2025</option>
+									    
 									</select>
 							</tr>
 						</table>
-						Billing Address: <input type=text name=userName style="margin:10px" placeholder='1 A St, Lincoln, NE-68508'><br>
-						Shipping Address: <input type=text name=userName style="margin:10px" placeholder='1 A St, Lincoln, NE-68508'><br>
+						Billing Address: <input type=text name=billingAddress style="margin:10px" placeholder='1 A St, Lincoln, NE-68508'><br>
+						Shipping Address: <input type=text name=shippingAddress style="margin:10px" placeholder='1 A St, Lincoln, NE-68508'><br>
 						Password:  <input type=password name=password style="margin:10px" placeholder='6-Characters'><br>
-					</form>
+					
 					<div style="text-align:center; margin:10px;">
 						<form action="ViewAndCheckoutShoppingCart.jsp">
 							<input type=submit value="Cancel">
 						</form>
-						<form action="CustomerTransactionConfirmation.jsp">
-							<input  type=submit value="Confirm Payment" >	
-						</form>
+						<input  type=submit value="Confirm Payment" >	
+						
 					</div>
+					</form>
 				</td>
 			</tr>
 		</table>
