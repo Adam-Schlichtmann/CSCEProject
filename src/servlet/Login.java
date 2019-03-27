@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.FileInputStream;
+import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
+import model.DBAccess;
 import model.Users;
 import model.UsersDB;
 import model.Venue;
@@ -26,7 +30,7 @@ import model.VenueDB;
 @WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	static Logger log = Logger.getLogger(DBAccess.class.getName());
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,6 +43,9 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		ServletContext sc = this.getServletContext();
+		String propFilePath = sc.getRealPath("/WEB-INF/lib/log4j.properties");
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("CustomerHomePage.jsp");

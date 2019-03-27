@@ -1,5 +1,6 @@
 package model;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -10,13 +11,26 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import util.hashingUtil;
+
 import model.Users;
+
 import com.mysql.jdbc.*;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 
 public class DBAccess {
 	Connection conn = null;
 	Statement stmt = null;
 	PreparedStatement ps = null;
+	
+	static Logger log = Logger.getLogger(DBAccess.class.getName());
+	String path = "/WebContent/WEB-INF/lib/log4j.properties";
+	
+	
+	
 	
 	// JDBC driver name and database URL
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -32,6 +46,7 @@ public class DBAccess {
 	
 // <---------------REVIEWS------------------>
 	public String addReview(Review r) {
+		PropertyConfigurator.configure(path);
 		String result = "Review Submitted";
 		try {
 		  stmt = conn.createStatement();
@@ -45,7 +60,7 @@ public class DBAccess {
 		  
 
 		  sql = "INSERT INTO customerreviews (concertID, userID, ReviewDate, Rating, Review)" +
-		          "VALUES (? ? ? ? ?)";
+		          "VALUES (?, ?, ?, ?, ?)";
 		  
 		  ps = conn.prepareStatement(sql);
 		  ps.setInt(1, concertID);
@@ -60,8 +75,10 @@ public class DBAccess {
 		  
 		  } catch (SQLException e) {
 				// TODO Auto-generated catch block
+				log.error("SQL Error: ", e);
 				e.printStackTrace();
 				result = "Review Submission Failed";
+				
 		}
 		return result;
 	}
@@ -82,6 +99,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return r;
@@ -110,6 +128,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return p;
@@ -135,6 +154,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: : ", e);
 			e.printStackTrace();
 		}
 		return p;
@@ -155,6 +175,7 @@ public class DBAccess {
 			stat.executeUpdate(SQL);
 		    stat.close();   
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 	}
@@ -175,6 +196,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		
@@ -193,6 +215,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return c;
@@ -220,6 +243,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return v;
@@ -244,6 +268,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return VenueHolder;
@@ -271,6 +296,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return v;
@@ -351,6 +377,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return o;
@@ -378,6 +405,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return o.get(0);
@@ -393,6 +421,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 	}
@@ -408,7 +437,7 @@ public class DBAccess {
 			stmt = conn.createStatement();
 			String sql;
 			sql = "INSERT INTO orders (CustomerId, TotalCost, OrderDate, BillingAddress, ShippingAddress, CreditCardNumber)" +
-			          "VALUES (? ? ? ? ? ?)";
+			          "VALUES (?, ?, ?, ?, ?, ?)";
 			  ps = conn.prepareStatement(sql);
 			  ps.setInt(1, cID);
 			  ps.setInt(2, TC);
@@ -419,6 +448,7 @@ public class DBAccess {
 			  ps.executeQuery();
 			// stmt.executeUpdate(sql);
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 	}
@@ -445,6 +475,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return o;
@@ -470,6 +501,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return OrderItemHolder;
@@ -485,6 +517,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 	}
@@ -497,7 +530,7 @@ public class DBAccess {
 			stmt = conn.createStatement();
 			String sql;
 			sql = "INSERT INTO orderitems (OrderId, PerformanceID, Quantity)" +
-			          "VALUES (? ? ?)";
+			          "VALUES (?, ?, ?)";
 			  ps = conn.prepareStatement(sql);
 			  ps.setInt(1, oID);
 			  ps.setInt(2, pID);
@@ -506,6 +539,7 @@ public class DBAccess {
 			  
 			// stmt.executeUpdate(sql);
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 	}
@@ -535,6 +569,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return c;
@@ -561,6 +596,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return CreditHolder;
@@ -581,6 +617,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 	}
@@ -602,6 +639,7 @@ public class DBAccess {
 				}
 			    stat.close();
 			} catch (SQLException e) {
+				log.error("SQL Error: ", e);
 				e.printStackTrace();
 			}
 			return TicketHolder;
@@ -627,6 +665,7 @@ public class DBAccess {
 				}
 			    stat.close();
 			} catch (SQLException e) {
+				log.error("SQL Error: ", e);
 				e.printStackTrace();
 			}
 			return t;
@@ -652,6 +691,7 @@ public class DBAccess {
 				}
 			    stat.close();
 			} catch (SQLException e) {
+				log.error("SQL Error: ", e);
 				e.printStackTrace();
 			}
 			return t;
@@ -675,6 +715,7 @@ public class DBAccess {
 				}
 			    stat.close();
 			} catch (SQLException e) {
+				log.error("SQL Error: ", e);
 				e.printStackTrace();
 			}
 			return TicketVPriceHolder;
@@ -692,23 +733,32 @@ public class DBAccess {
 		  String lastName = aUser.getLastName();
 		  String userName = aUser.getUserName();
 		  String password = aUser.getPassword();
+		  String hashedpword = "";
+		try {
+			hashedpword = hashingUtil.hashPassword(password);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			log.error("No Such Algorithm: ", e);
+			e.printStackTrace();
+		}
 		  
 
 		  sql = "INSERT INTO users (FirstName, LastName, Username, Password)" +
-		          "VALUES (? ? ? ?)";
+		          "VALUES (?, ?, ?, ?)";
 		  ps = conn.prepareStatement(sql);
 		  ps.setString(1, firstName);
 		  ps.setString(2, lastName);
 		  ps.setString(3, userName);
-		  ps.setString(4, password);
-		  ps.executeQuery();
+		  ps.setString(4, hashedpword);
+		  ps.executeUpdate();
 		  
 		  // stmt.executeUpdate(sql);
 		  
 		  
 		  } catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+			  log.error("SQL Error: ", e);
+			  e.printStackTrace();
 		}
 		
 	}
@@ -730,6 +780,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		
@@ -740,19 +791,29 @@ public class DBAccess {
 		boolean passwordMatches = false;
 		String SQL = "SELECT * from users";
 	    Statement stat;
+	    String hashedPword = "";
 		try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(SQL);
 			
 			while (rs.next()){	
-				if(password.equals( rs.getString("Password") )) {
-					passwordMatches = true;
+				try {
+					hashedPword = hashingUtil.hashPassword(password);
+					System.out.println(hashedPword);
+					if(hashedPword.equals(rs.getString("Password"))) {
+						passwordMatches = true;
+					}
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					log.error("No Such Algorithm: ", e);
+					e.printStackTrace();
 				}    
 		    }
 			
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		
@@ -775,6 +836,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return cId;
@@ -802,6 +864,7 @@ public class DBAccess {
 			}
 			stat.close();
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return user;
@@ -825,6 +888,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		String fullname = fname + " " + lname;
@@ -845,13 +909,20 @@ public class DBAccess {
 					aUser.setFirstName(rs.getString(2));
 					aUser.setLastName(rs.getString(3));
 					aUser.setUserName(rs.getString(4));
-					aUser.setPassword(rs.getString(5));
+					try {
+						aUser.setPassword(hashingUtil.hashPassword( rs.getString(5)));
+					} catch (NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						log.error("No Such Algorithm: ", e);
+						e.printStackTrace();
+					}
 				} 
 		    }
 			
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		
@@ -874,6 +945,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 	}
@@ -891,6 +963,7 @@ public class DBAccess {
 			 //Open a connection
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 		} catch (SQLException e){
+			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 	}
@@ -900,7 +973,7 @@ public class DBAccess {
 		try {
 			conn.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("SQL Error: ", e);
 		}
 	}
 
