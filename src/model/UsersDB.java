@@ -44,7 +44,7 @@ public class UsersDB {
 	   	return aUser;
     }
     
-    public Users getUserByID(int userID) {   
+    public static Users getUserByID(int userID) {   
 	   	DBAccess db = new DBAccess();
 	   	db.connectMeIn();
 	   	Users aUser = db.getUserByID(userID);

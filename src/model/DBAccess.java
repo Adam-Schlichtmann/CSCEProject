@@ -47,7 +47,7 @@ public class DBAccess {
 // <---------------REVIEWS------------------>
 	public String addReview(Review r) {
 		PropertyConfigurator.configure(path);
-		String result = "Review Submitted";
+		String result = "p";
 		try {
 		  stmt = conn.createStatement();
 		  String sql;
@@ -68,38 +68,42 @@ public class DBAccess {
 		  ps.setString(3, reviewDate);
 		  ps.setInt(4, rating);
 		  ps.setString(5, review);
-		  ps.executeQuery();
+		  ps.executeUpdate();
 		  
 		  // stmt.executeUpdate(sql);
 		  
 		  
 		  } catch (SQLException e) {
 				// TODO Auto-generated catch block
-				log.error("SQL Error: ", e);
+				//log.error("SQL Error: ", e);
 				e.printStackTrace();
-				result = "Review Submission Failed";
+				result = "fail";
 				
 		}
 		return result;
 	}
 	
-	public Review getReview(int concertID) {
-		Review r  = new Review();
+	public List<Review> getReview(int concertID) {
+		List<Review> r  = new ArrayList<Review>();
 		String SQL = "SELECT * from customerreviews WHERE Id='"+concertID+"'";
 	    Statement stat;
 		try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(SQL);
-			r.setConcertID(Integer.parseInt(rs.getString("concertID")));
-			r.setRating(Integer.parseInt(rs.getString("Rating")));
-			r.setUserID(Integer.parseInt(rs.getString("userID")));
-			r.setReviewDate(rs.getString("ReviewDate"));
-			r.setReview(rs.getString("PostalCode"));
-			r.setUser(this.getUserByID(r.getUserID()));
-		    stat.close();
+			while(rs.next()) {
+				Review rh = new Review();
+				rh.setConcertID(Integer.parseInt(rs.getString("concertID")));
+				rh.setRating(Integer.parseInt(rs.getString("Rating")));
+				rh.setUserID(Integer.parseInt(rs.getString("userID")));
+				rh.setReviewDate(rs.getString("ReviewDate"));
+				rh.setReview(rs.getString("review"));
+				rh.setUser(this.getUserByID(rh.getUserID()));
+			    r.add(rh);
+			}
+			stat.close();
 		        
 		} catch (SQLException e) {
-			log.error("SQL Error: ", e);
+			//log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 		return r;
@@ -721,7 +725,6 @@ public class DBAccess {
 			while (rs.next()){	
 				try {
 					hashedPword = hashingUtil.hashPassword(password);
-					System.out.println(hashedPword);
 					if(hashedPword.equals(rs.getString("Password"))) {
 						passwordMatches = true;
 					}

@@ -44,14 +44,14 @@ public class ConcertSearchResult extends HttpServlet {
         CPTValues cpt = new CPTValues();
         List<CPTValues> temp = new ArrayList<CPTValues>();
         ReviewDB reviewDB = new ReviewDB(); 
-        Review review = new Review();
+        List<Review> review = new ArrayList<Review>();
         
         
 		int performanceID = Integer.parseInt(request.getParameter("detailsButton"));
 		
 		cpt =cptDB.getCPTData(performanceID);
 		
-		review = reviewDB.getReview(cpt.getC().getId());
+		review = ReviewDB.getReview(cpt.getC().getId());
 		List<TicketVenuePrices> tickets = new ArrayList<TicketVenuePrices>();
 		System.out.println(cpt.getP().getVenueID());
 		tickets = TicketVenuePricesDB.getTicketTypesbyPID(performanceID, cpt.getP().getVenueID());
