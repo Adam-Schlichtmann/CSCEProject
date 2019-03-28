@@ -140,6 +140,7 @@
 			 	var rating = document.getElementById("stars").value;
 			 	var cID = document.getElementById("cID").value;
 			 	var uID = document.getElementById("uID").value;
+			 	
 			 	console.log(review);
 			 	$.post("addReviewServlet", {rev:review, rat:rating, CID:cID, UID:uID}, function(data,status) {
 			 		console.log(data);
@@ -147,26 +148,10 @@
 			   			alert("Review Submission Unsucessful");
 			   		} else {
 			   			alert("We got it")	
-			   			//var Table = document.getElementById("reviewTable");
-			   			//Table.innerHTML = "";
-			   			$("revewTable").find("tr:gt(0)").remove();
-			   			var table = document.getElementById("reviewTable");
-			   			//for (var i = 0; i <data.length; i++){
-			   			var i = 1;
-			   			for(const rev in data){
-			   				var row = table.insertRow(i);
-			   				var cell1 = row.insertCell(0);
-			   				var cell2 = row.insertCell(1);
-			   				var cell3 = row.insertCell(2);
-			   				var cell4 = row.insertCell(3);
-							i = i + 1;
-			   				// Add some text to the new cells:
-			   				cell1.innerHTML = rev.getUser().getFirstName();
-			   				cell2.innerHTML = rev.getReviewDate();
-			   				cell3.innerHTML = rev.getRating();
-			   				cell4.innerHTML = rev.getReview();
-			   				
-			   			}
+			   			var Table = document.getElementById("reviewTable");
+			   			Table.innerHTML = "";
+			   			Table.innerHTML = data;
+			   			
 			   		}
 			    	
 			 	});

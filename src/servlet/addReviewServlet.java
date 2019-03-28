@@ -3,7 +3,10 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,7 +57,25 @@ public class addReviewServlet extends HttpServlet {
 		String result = ReviewDB.addReview(r);
 		PrintWriter out = response.getWriter(); 
 		if(result.equals("p")) {
-			out.println(ReviewDB.getReview(Integer.parseInt(cID)));
+			List<Review> revs = new ArrayList<Review>();
+			revs = ReviewDB.getReview(Integer.parseInt(cID));
+			//Collections.sort(revs, (o1, o2) -> o1.getReviewDate().compareTo(o2.getReviewDate()));
+			String html = "<tr>" + 
+					"<th>Name</th>" + 
+					"<th>Date</th>" + 
+					"<th>Rating</th>" + 
+					"<th>Review</th>" + 
+					"</tr>";
+			for( int i = revs.size() - 1; i > -1; i--) {
+				html = html +  "<tr>" + 
+						"<td>" + revs.get(i).getUser().getFirstName() + "</td>" + 
+						"<td>" + revs.get(i).getReviewDate() +"</td>" + 
+						"<td>" + revs.get(i).getRating() +"</td>" + 
+						"<td>" + revs.get(i).getReview() + "</td>" + 
+						"</tr>";
+					
+			}
+		    response.getWriter().write(html);
 		}
 		
 		

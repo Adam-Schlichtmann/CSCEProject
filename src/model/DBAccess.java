@@ -85,7 +85,7 @@ public class DBAccess {
 	
 	public List<Review> getReview(int concertID) {
 		List<Review> r  = new ArrayList<Review>();
-		String SQL = "SELECT * from customerreviews WHERE Id='"+concertID+"'";
+		String SQL = "SELECT * from customerreviews WHERE concertID='"+concertID+"'";
 	    Statement stat;
 		try {
 			stat = conn.createStatement();
