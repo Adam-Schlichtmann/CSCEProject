@@ -28,7 +28,7 @@ import util.hashingUtil;
 /**
  * Servlet implementation class CustomerTransactionConfirmation
  */
-@WebServlet("/CustomerTransactionConfirmation")
+@WebServlet("/PlaceOrder")
 public class PlaceOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
