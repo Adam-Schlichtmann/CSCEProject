@@ -1,5 +1,8 @@
 package model;
 
+import java.util.Collection;
+import java.util.List;
+
 public class ReviewDB {
 	public static boolean checkLength(String s) {
 		if(s.length() > 255) {
@@ -15,10 +18,10 @@ public class ReviewDB {
 		db.closeConnection();
 		return result;
 	}
-	public static Review getReview(int concertID) {
+	public static List<Review> getReview(int concertID) {
 		DBAccess db = new DBAccess();
 		db.connectMeIn();
-		Review result = db.getReview(concertID);
+		List<Review> result = db.getReview(concertID);
 		db.closeConnection();
 		return result;
 	}

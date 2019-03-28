@@ -16,7 +16,7 @@
 		  <a href="ViewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
 		</div>
 		<div align="center">
-			<form action=CustomerReview>
+			<form action=CustomerReviewServlet>
 				<textarea col="150" rows="8" type=text placeholder="Enter your Review" name="review"></textarea><br>
 				Star Rating: <br>
 				<select name="stars">

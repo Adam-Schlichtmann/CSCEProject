@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+		</script>
 <!-- Font Awesome Icon Library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -92,31 +94,87 @@
 		</div>
 		
 		
-		<h3>Reviews for Pinnacle Bank Arena</h3>
-		<form action="CustomerReview.jsp">
-		<input type=submit value="Submit">
-		</form>
-		<span class="heading">User Rating</span>
-		<h3>${concert.rating} / 5</h3>
+		<h3 align="center">Concert Reviews</h3>
+		
+		<div align="center">
+			<textarea col="250" rows="4" type=text placeholder="Enter your Review" id="review"></textarea><br>
+			Star Rating: <br>
+			<select id="stars">
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+			<br>
+			<br>
+			<button onclick="getData();" type=submit value="Submit">Submit Review</button>
+		</div>
+		
+		<span class="heading">User Concert Rating</span>
+		<h3><c:out value="${cpt.getC().getRating()}"></c:out> / 5</h3>
 		
 		<br>
 		<br>
 		
-		<table style="width:100%">
+		<table style="width:100%" id="reviewTable">
 			<tr>
 				<th>Name</th>
 				<th>Date</th>
 				<th>Rating</th>
 				<th>Review</th>
 			</tr>
-			<tr>
-	            <td>${review.getUser().getFirstName()}</td>
-	            <td>${review.getReviewDate()}</td>
-	            <td>${review.getRating()}</td>
-	            <td>${review.getReview()}</td>
-	        </tr>
-
+			<c:forEach items="${review}" var="r"> 
+				<tr>
+		            <td><c:out value="${r.getUser().getFirstName()}"></c:out></td>
+		            <td><c:out value="${r.getReviewDate()}"></c:out></td>
+		            <td><c:out value="${r.getRating()}"></c:out></td>
+		            <td><c:out value="${r.getReview()}"></c:out></td>
+		        </tr>
+			</c:forEach>
 		</table>
-	
+		<script>
+		  	function getData() {
+				var review = document.getElementById("review").value;
+			 	var rating = document.getElementById("stars").value;
+			 	var cID = document.getElementById("cID").value;
+			 	var uID = document.getElementById("uID").value;
+			 	console.log(review);
+			 	$.post("addReviewServlet", {rev:review, rat:rating, CID:cID, UID:uID}, function(data,status) {
+			 		console.log(data);
+			    	if(data == null) {	    			
+			   			alert("Review Submission Unsucessful");
+			   		} else {
+			   			alert("We got it")	
+			   			//var Table = document.getElementById("reviewTable");
+			   			//Table.innerHTML = "";
+			   			$("revewTable").find("tr:gt(0)").remove();
+			   			var table = document.getElementById("reviewTable");
+			   			//for (var i = 0; i <data.length; i++){
+			   			var i = 1;
+			   			for(const rev in data){
+			   				var row = table.insertRow(i);
+			   				var cell1 = row.insertCell(0);
+			   				var cell2 = row.insertCell(1);
+			   				var cell3 = row.insertCell(2);
+			   				var cell4 = row.insertCell(3);
+							i = i + 1;
+			   				// Add some text to the new cells:
+			   				cell1.innerHTML = rev.getUser().getFirstName();
+			   				cell2.innerHTML = rev.getReviewDate();
+			   				cell3.innerHTML = rev.getRating();
+			   				cell4.innerHTML = rev.getReview();
+			   				
+			   			}
+			   		}
+			    	
+			 	});
+			}
+		</script>
+		
+		<input type="hidden" id="cID" value="${cpt.getC().getId()}" />
+		<input type="hidden" id="uID" value="${id}" />
+		
 	</body>
 </html>

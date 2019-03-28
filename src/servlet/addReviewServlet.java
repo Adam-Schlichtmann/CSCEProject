@@ -1,29 +1,31 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import model.Review;
 import model.ReviewDB;
+import model.UsersDB;
 
 /**
- * Servlet implementation class CustomerReview
+ * Servlet implementation class addReviewServlet
  */
-@WebServlet("/CustomerReview")
-public class CustomerReview extends HttpServlet {
+@WebServlet("/addReviewServlet")
+public class addReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CustomerReview() {
+    public addReviewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,23 +34,29 @@ public class CustomerReview extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String review = request.getParameter("review");
-		String stars = request.getParameter("stars");
-		int rating = Integer.parseInt(stars);
-		
-		Review r = new Review();
-		HttpSession session = request.getSession();
-		RequestDispatcher dispatcher = request.getRequestDispatcher("CustomerReviewConfirmation.jsp");
-		int cID = (int) session.getAttribute("id");
+		System.out.println("HERERE");
+		String review = request.getParameter("rev");
+		String rating = request.getParameter("rat");
+		String cID = request.getParameter("CID");
+		String uID = request.getParameter("UID");
+		System.out.println(review);
+		System.out.println(rating);
 		System.out.println(cID);
+		System.out.println(uID);
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+		Review r = new Review();
+		r.setConcertID(Integer.parseInt(cID));
+		r.setRating(Integer.parseInt(rating));
 		r.setReview(review);
-		r.setRating(rating);
+		r.setUserID(Integer.parseInt(uID));
+		r.setUser(UsersDB.getUserByID(Integer.parseInt(uID)));
+		r.setReviewDate(timeStamp);
 		String result = ReviewDB.addReview(r);
-		boolean status = false;
-		request.setAttribute("status", status);
-		dispatcher.forward(request, response);
-		// TODO STUB send the result to the next page
-		response.sendRedirect("CustomerReviewConfirmation.jsp");
+		PrintWriter out = response.getWriter(); 
+		if(result.equals("p")) {
+			out.println(ReviewDB.getReview(Integer.parseInt(cID)));
+		}
+		
 		
 	}
 
