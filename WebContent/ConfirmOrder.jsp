@@ -62,7 +62,7 @@
 		  <a class="active" href="CustomerHomePage.jsp">Home</a>
 		  <a href="ViewOrders">Orders</a>
 		  <a href="Login.jsp" style="float:right">Log Out</a>
-		  <a href="UpdateShoppingCart">Shopping Cart</a>
+		  <a href="ViewAndCheckoutShoppingCart.jsp"">Shopping Cart</a>
 		</div>
 		<h1 style="text-align:center">Transactions</h1>
 			<table style="width:50%" align="center">
