@@ -11,10 +11,10 @@
 		<link rel="stylesheet" type="text/css" href="NavigationBarTheme.css">
 		<div class="topnav">
 		  <a class="active" href="CustomerHomePage.jsp">Home</a>
-		  <form action="ViewOrders"><input type=submit value="Orders"></form>
+		  <a href="ViewOrders">Orders</a>
 		  <a href="Login.jsp" style="float:right">Log Out</a>
-		  <a href="ViewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
-		</div>>
+		  <a href="UpdateShoppingCart">Shopping Cart</a>
+		</div>
 		<h1 style="text-align:center">Transactions</h1>
 			<table style="width:50%" align="center">
 			  	<tr>
