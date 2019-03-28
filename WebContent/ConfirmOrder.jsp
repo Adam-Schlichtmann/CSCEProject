@@ -17,7 +17,7 @@
 				cardNumberTemp = Number(cardNumberTemp);
 			
 			   	// make call to Bank
-				 $.post("../Bank/BankTransaction", {firstName:firstName, lastName:lastName, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumberTemp:cardNumberTemp}, function(data,status) {
+				 $.post("../WebApp/BankTransaction", {firstName:firstName, lastName:lastName, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumberTemp:cardNumberTemp}, function(data,status) {
 					    
 			    		
 			    	 // Following data values are received from the "FormjQueryResponse" app
