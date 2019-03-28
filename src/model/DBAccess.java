@@ -388,6 +388,33 @@ public class DBAccess {
 		
 	}
 	
+	public List<Orders> getAllOrders() {
+		List<Orders>  o = new ArrayList<Orders>();
+		String SQL = "SELECT * from orders ";
+	    Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			while (rs.next()){
+				Orders OrderHolder = new Orders();
+				OrderHolder.setId(rs.getInt("Id"));
+				OrderHolder.setTotalCost(rs.getInt("TotalCost"));
+				OrderHolder.setOrderDate(rs.getDate("OrderDate"));
+				OrderHolder.setBillingAddress(rs.getString("BillingAddress"));
+				OrderHolder.setCreditCardNumber(rs.getLong("CreditCardNumber"));
+				o.add(OrderHolder);
+		    }
+			
+		    stat.close();
+		        
+		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
+			e.printStackTrace();
+		}
+		return o;
+		
+	}
+	
 	public Orders getOrdersByOrdersID(int oID) {
 		List<Orders>  o = new ArrayList<Orders>();
 		String SQL = "SELECT * from orders WHERE Id='"+oID+"'";
@@ -521,7 +548,7 @@ public class DBAccess {
 		    stat.close();
 		        
 		} catch (SQLException e) {
-			log.error("SQL Error: ", e);
+ 			log.error("SQL Error: ", e);
 			e.printStackTrace();
 		}
 	}

@@ -98,26 +98,24 @@ public class PlaceOrder extends HttpServlet {
 					newOrder.setBillingAddress(billingAddress);
 					newOrder.setShippingAddress(shippingAddress);
 					
-					List<Orders> customerOrders = OrdersDB.getOrdersByCustomerID(customerId);
+					List<Orders> customerOrders = OrdersDB.getAllOrders();
 					int temp  = -10000;
-					for(int j = 0; j <customerOrders.size();j++ ) {
-						if(customerOrders.get(j).getId() > temp) {
-							temp = customerOrders.get(j).getId();
-						}
-					}
-					
+					System.out.println("size : " + customerOrders.size());
+					temp = customerOrders.size() +1;
+					System.out.println("temp :" + temp);
+					ordersDB.createOrder(newOrder);
 					for(int i = 0; i< previousCartItems.getItems().size();i++) {
 						newOrderItem.setCpt(previousCartItems.getItems().get(i).getCpt());
 						newOrderItem.setOrderId(temp);
 						newOrderItem.setPerformanceId(newOrderItem.getCpt().getP().getId());
 						newOrderItem.setQuantity(previousCartItems.getItems().get(i).getAmountOfTickets());
 						performanceDB.updateTicketsByPID(newOrderItem.getPerformanceId(), newOrderItem.getQuantity());
-						newOrderItemsDB.addOrderItem(newOrderItem);
+						OrderItemsDB.addOrderItem(newOrderItem);
 					}
 					
 					
 					
-					ordersDB.createOrder(newOrder);
+					
 					session.setAttribute("cart", null);
 					dispatcher.forward(request, response);
 					System.out.println("Processed");
