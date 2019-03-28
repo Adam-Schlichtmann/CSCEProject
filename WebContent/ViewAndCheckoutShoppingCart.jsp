@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+		</script>
 <meta charset="UTF-8">
 <title>Shopping Cart</title>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
@@ -13,8 +15,45 @@
 		  <a class="active" href="CustomerHomePage.jsp">Home</a>
 		  <a href="ViewOrders">Orders</a>
 		  <a href="Login.jsp" style="float:right">Log Out</a>
-		  <a href="UpdateShoppingCart">Shopping Cart</a>
+		  <a href="ViewAndCheckoutShoppingCart.jsp"">Shopping Cart</a>
 		</div>
+		<script>
+		(function(){	
+		 	$.post("loadShoppingCart", {}, function(data,status) {
+		 		console.log(data);
+		    	if(data == null) {	    			
+		   			alert("No Cart to Load");
+		   		} else {
+		   			var res = document.getElementById("cartTable");
+		   			res.innerHTML = "";
+		   			res.innerHTML = data;
+		   			
+		   		}
+		    	
+		 	});
+		})();
+		
+		</script>
+		
+		
+		<script>
+		  	function removeFromCart() {
+				var pID = document.getElementById("deleteConcert").value;
+			 	$.post("removeFromShoppingCart", {deleteConcert:pID}, function(data,status) {
+			 		console.log(data);
+			    	if(data == null) {	    			
+			   			alert("Item not added to cart");
+			   		} else {
+			   			var res = document.getElementById("cartTable");
+			   			res.innerHTML = "";
+			   			res.innerHTML = data;
+			   			
+			   		}
+			    	
+			 	});
+			}
+		</script>
+		
 		<h1 style="text-align:center">Shopping Cart</h1>
 		<br>
 		<br>
@@ -23,7 +62,7 @@
 				<h3 style="text-align:center">${errorMessage }</h3>
 			</c:when>
 			<c:otherwise>
-				<table style="width:100%">
+				<table id="cartTable" style="width:100%">
 			
 					<tr>
 						<td style="text-align:center">Event Name</td>
@@ -47,7 +86,7 @@
 				            <td style="text-align:center"><c:out value="$ ${items.getPricePerTicket()}"/></td>
 				            <td style="text-align:center">=</td>
 				            <td style="text-align:center"><c:out value="$ ${items.getTotalPrice()}"/></td>
-				            <td style="text-align:center"><form action=UpdateShoppingCart><button name="deleteConcert" type=submit value="${items.getCpt().getP().getId()}">Remove</button></form></td>
+				            <td style="text-align:center"><button onclick="removeFromCart();"id="deleteConcert" type=submit value="${items.getCpt().getP().getId()}">Remove</button></td>
 				        </tr>
 				    </c:forEach>
 					<tr>

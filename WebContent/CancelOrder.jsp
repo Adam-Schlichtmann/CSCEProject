@@ -13,7 +13,7 @@
 		  <a class="active" href="CustomerHomePage.jsp">Home</a>
 		  <a href="ViewOrders">Orders</a>
 		  <a href="Login.jsp" style="float:right">Log Out</a>
-		  <a href="UpdateShoppingCart">Shopping Cart</a>
+		  <a href="ViewAndCheckoutShoppingCart.jsp"">Shopping Cart</a>
 		</div>
 		<h1 style="text-align:center">Order Cancellation</h1>
 		<img src="${orderItem.getCpt().getC().getThumbnail() }" alt="Drake" style="display:block; margin:auto auto; width:200px; height:200px"></img>
