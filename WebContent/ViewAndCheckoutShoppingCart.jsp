@@ -65,18 +65,18 @@
 				<table id="cartTable" style="width:100%">
 			
 					<tr>
-						<td style="text-align:center">Event Name</td>
+						<td style="text-align:center">No Items in Cart</td>
 						<td style="text-align:center"></td>
-						<td style="text-align:center">Time & Date</td>
-						<td style="text-align:center">Quantity</td>
-						<td style="text-align:center">X</td>
-						<td style="text-align:center">Price/Ticket</td>
 						<td style="text-align:center"></td>
-						<td style="text-align:center">SubTotal</td>
+						<td style="text-align:center"></td>
+						<td style="text-align:center"></td>
+						<td style="text-align:center"></td>
+						<td style="text-align:center"></td>
+						<td style="text-align:center"></td>
 						<td style="text-align:center">
 						</td>
 					</tr>
-					 <c:forEach items="${cartItems}" var="items">
+					<%--  <c:forEach items="${cartItems}" var="items">
 				        <tr>
 			            	<td style="text-align:center"><c:out value="${items.getCpt().c.getConcertName()}" /></td>
         					<td style="text-align:center"><img src="${items.getCpt().getC().getThumbnail() }" alt="" border=3 height=150 width=150></img></td>			            	
@@ -88,8 +88,8 @@
 				            <td style="text-align:center"><c:out value="$ ${items.getTotalPrice()}"/></td>
 				            <td style="text-align:center"><button onclick="removeFromCart();"id="deleteConcert" type=submit value="${items.getCpt().getP().getId()}">Remove</button></td>
 				        </tr>
-				    </c:forEach>
-					<tr>
+				    </c:forEach> --%>
+					<%-- <tr>
 						<td style="text-align:center"></td>
 						<td style="text-align:center"></td>
 						<td style="text-align:center"></td>
@@ -99,7 +99,7 @@
 						<td style="text-align:center">=</td>
 						<td style="text-align:center"><c:out value="$ ${cart.getTotalPrice()}"/></td>
 						<td style="text-align:center"></td>
-					</tr>
+					</tr> --%>
 				</table>
 					<br>
 					<br>
