@@ -61,6 +61,7 @@ public class Login extends HttpServlet {
 				session.setAttribute("id", customerId);
 				List<Venue> venueList = VenueDB.getAllVenues();
 				session.setAttribute("venueList", venueList);
+				System.out.println("here");
 				dispatcher.forward(request, response);
 			}
 		} else {

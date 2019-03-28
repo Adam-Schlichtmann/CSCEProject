@@ -9,7 +9,7 @@ public class Orders {
 	private Date OrderDate;
 	private String ShippingAddress;
 	private String BillingAddress;
-	private String CreditCardNumber;
+	private long CreditCardNumber;
 	
 	public Orders() {
 		super();
@@ -45,10 +45,10 @@ public class Orders {
 	public void setBillingAddress(String billingAddress) {
 		BillingAddress = billingAddress;
 	}
-	public String getCreditCardNumber() {
+	public long getCreditCardNumber() {
 		return CreditCardNumber;
 	}
-	public void setCreditCardNumber(String creditCardNumber) {
+	public void setCreditCardNumber(long creditCardNumber) {
 		CreditCardNumber = creditCardNumber;
 	}
 

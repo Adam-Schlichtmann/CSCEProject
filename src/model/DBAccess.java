@@ -370,7 +370,7 @@ public class DBAccess {
 				OrderHolder.setTotalCost(rs.getInt("TotalCost"));
 				OrderHolder.setOrderDate(rs.getDate("OrderDate"));
 				OrderHolder.setBillingAddress(rs.getString("BillingAddress"));
-				OrderHolder.setCreditCardNumber(rs.getString("CreditCardNumber"));
+				OrderHolder.setCreditCardNumber(rs.getLong("CreditCardNumber"));
 				o.add(OrderHolder);
 		    }
 			
@@ -398,7 +398,7 @@ public class DBAccess {
 				OrderHolder.setOrderDate(rs.getDate("OrderDate"));
 				OrderHolder.setBillingAddress(rs.getString("BillingAddress"));
 				OrderHolder.setShippingAddress(rs.getString("ShippingAddress"));
-				OrderHolder.setCreditCardNumber(rs.getString("CreditCardNumber"));
+				OrderHolder.setCreditCardNumber(rs.getLong("CreditCardNumber"));
 				o.add(OrderHolder);
 		    }
 			
@@ -432,7 +432,7 @@ public class DBAccess {
 		Date day = o.getOrderDate();
 		String billAdd = o.getBillingAddress();
 		String shippAdd = o.getShippingAddress();
-		String CCN = o.getCreditCardNumber();
+		long CCN = o.getCreditCardNumber();
 		try {
 			stmt = conn.createStatement();
 			String sql;
@@ -444,9 +444,9 @@ public class DBAccess {
 			  ps.setDate(3, day);
 			  ps.setString(4, billAdd);
 			  ps.setString(5, shippAdd);
-			  ps.setString(6, CCN);
-			  ps.executeQuery();
-			// stmt.executeUpdate(sql);
+			  ps.setLong(6, CCN);
+			  ps.executeUpdate();
+//			  stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			log.error("SQL Error: ", e);
 			e.printStackTrace();
@@ -538,84 +538,6 @@ public class DBAccess {
 			  ps.executeQuery();
 			  
 			// stmt.executeUpdate(sql);
-		} catch (SQLException e) {
-			log.error("SQL Error: ", e);
-			e.printStackTrace();
-		}
-	}
-	
-	
-	// <---------------CreditCards------------------>
-	
-	public List<CreditCards> getCreditCards(int cID){
-		List<CreditCards>  c = new ArrayList<CreditCards>();
-		String SQL = "SELECT * from creditcards WHERE UserId='"+cID+"'";
-	    Statement stat;
-		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
-			while (rs.next()){
-				CreditCards CreditHolder = new CreditCards();
-				CreditHolder.setId(rs.getInt("Id"));
-				CreditHolder.setCardHolderName(rs.getString("CardHolderName"));
-				CreditHolder.setBalance(rs.getDouble("Balance"));
-				CreditHolder.setCardType(rs.getString("CardType"));
-				CreditHolder.setUserId(rs.getInt("UserId"));
-				CreditHolder.setCVV(rs.getString("CVV"));
-				CreditHolder.setExpirationDate(rs.getDate("ExpirationDate"));
-				c.add(CreditHolder);
-		    }
-			
-		    stat.close();
-		        
-		} catch (SQLException e) {
-			log.error("SQL Error: ", e);
-			e.printStackTrace();
-		}
-		return c;
-	}
-	
-	public CreditCards getCreditCardByCreditCardNumber(long ccNumber){
-		CreditCards CreditHolder = new CreditCards();
-		String SQL = "SELECT * from creditcards WHERE CreditCardNumber='"+ccNumber+"'";
-	    Statement stat;
-		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
-			while (rs.next()){
-				CreditHolder.setId(rs.getInt("Id"));
-				CreditHolder.setCardHolderName(rs.getString("CardHolderName"));
-				CreditHolder.setBalance(rs.getDouble("Balance"));
-				CreditHolder.setCardType(rs.getString("CardType"));
-				CreditHolder.setUserId(rs.getInt("UserId"));
-				CreditHolder.setCVV(rs.getString("CVV"));
-				CreditHolder.setExpirationDate(rs.getDate("ExpirationDate"));
-				CreditHolder.setCreditCardNumber("CreditCardNumber");
-		    }
-			
-		    stat.close();
-		        
-		} catch (SQLException e) {
-			log.error("SQL Error: ", e);
-			e.printStackTrace();
-		}
-		return CreditHolder;
-	}
-	
-	public void updateBalance(int cID, double cost){
-		String SQL = "SELECT Balance from creditcards WHERE UserId='"+cID+"'";
-	    Statement stat;
-	    Double balance;
-		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
-			rs.next();
-			balance = rs.getDouble("Balance");
-			balance = balance - cost;
-			SQL = "UPDATE creditcards SET Balance='"+ balance+"' WHERE UserId='"+cID+"'";
-			stat.executeUpdate(SQL);
-		    stat.close();
-		        
 		} catch (SQLException e) {
 			log.error("SQL Error: ", e);
 			e.printStackTrace();

@@ -46,12 +46,12 @@ public class CancelOrder extends HttpServlet {
 		int orderItemID = Integer.parseInt(request.getParameter("orderItemID"));
 		OrderItemsDB orderItemsDB = new OrderItemsDB();
 		OrderItems orderItem = orderItemsDB.getOrderItembyOrderItemID(orderItemID);
-//		List<Orders> order = OrdersDB.getOrdersByOrderID(cancelOrderID);
-//		for(int i=0; i < newOrder.size(); i++) {
-//			if(newOrder.get(i).getId() == cancelOrderID) {
-//				newOrder.remove(i);
-//			}
-//		}
+		List<Orders> order = OrdersDB.getOrdersByOrderID(cancelOrderID);
+		for(int i=0; i < newOrder.size(); i++) {
+			if(newOrder.get(i).getId() == cancelOrderID) {
+				newOrder.remove(i);
+			}
+		}
 		int totalPrice = orderItem.getCpt().getT().getTicketPrice() * orderItem.getQuantity();
 		orderItem.setTotalPrice(totalPrice);
 

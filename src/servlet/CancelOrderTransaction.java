@@ -45,7 +45,7 @@ public class CancelOrderTransaction extends HttpServlet {
 		int totalPrice =  order.getTotalCost() - refundAmount;
 		order.setTotalCost(totalPrice);
 		
-		//orderItemsDB.delOrderItem(Integer.parseInt(orderItemID)); //delete order item from database
+		orderItemsDB.delOrderItem(Integer.parseInt(orderItemID)); //delete order item from database
 		//ordersDB.setTotalPrice(int orderID, int newTotalPrice); //need to update total price in database for order
 		
 		
