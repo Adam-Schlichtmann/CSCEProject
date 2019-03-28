@@ -87,6 +87,7 @@ public class UpdateShoppingCart extends HttpServlet {
 		ShoppingCart previousCart = (ShoppingCart)session.getAttribute("cart");
 		session.setAttribute("cart", previousCart);
 		session.setAttribute("cartItems", previousCart.getItems());
+		System.out.println("cart items is now a session object");
 	}
 
 	private void deleteFromCart(HttpServletRequest request) {

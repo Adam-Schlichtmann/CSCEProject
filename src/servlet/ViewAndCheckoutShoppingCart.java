@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import model.CPTValuesDB;
 import model.DBAccess;
+import model.ShoppingCart;
 import model.ShoppingCartItem;
 import model.VenueDB;
 
@@ -36,7 +37,13 @@ public class ViewAndCheckoutShoppingCart extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("CustomerTransaction.jsp");
+		HttpSession session = request.getSession();
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ConfirmOrder.jsp");		
+		ShoppingCart previousCart = (ShoppingCart)session.getAttribute("cart");
+		request.setAttribute("cartItems", previousCart.getItems());
+		session.setAttribute("cart", previousCart);
+		session.setAttribute("cartItems", previousCart.getItems());
+		System.out.println("here");
 		dispatcher.forward(request, response);
 	}
 

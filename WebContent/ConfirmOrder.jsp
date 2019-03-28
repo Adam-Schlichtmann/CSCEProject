@@ -3,7 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/> 
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+		</script>
 <meta charset="ISO-8859-1">
 <title>Confirm Order</title>
 	<script>
@@ -83,13 +85,12 @@
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center">Total </td>
-				    <td style="text-align:center">$1010</td>	
+				    <td style="text-align:center"><c:out value="$ ${cart.getTotalPrice()}"/></td>	
 			    </tr>
 		  	</table>
 			<table align="center">
 			<tr>
 				<td>
-					<form style="text-align:center" name="paymentForm"  action="CustomerTransactionConfirmation" >
 						First Name: <input type=text name=firstName style="margin:10px" placeholder="John"><br>
 						Last Name: <input type=text name=lastName style="margin:10px" placeholder="Doe"><br>
 						<table>
@@ -154,7 +155,6 @@
 						<input  type=submit value="Confirm Payment" onClick="getdata()" >	
 						
 					</div>
-					</form>
 				</td>
 			</tr>
 		</table>

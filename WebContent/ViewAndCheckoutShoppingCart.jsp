@@ -64,7 +64,7 @@
 				</table>
 					<br>
 					<br>
-				<form style = "text-align:center" action="ViewAndCheckoutShoppingCart">
+				<form style = "text-align:center" action="ConfirmOrder.jsp">
 				<button name="checkoutButton" type=submit value="${cartItems}">Checkout</button>
 				</form>
 			</c:otherwise>
