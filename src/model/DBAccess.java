@@ -448,7 +448,7 @@ public class DBAccess {
 	    Statement stat;
 		try {
 			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
+			int rs = stat.executeUpdate(SQL);
 		    stat.close();
 		        
 		} catch (SQLException e) {
@@ -478,6 +478,25 @@ public class DBAccess {
 			  ps.setLong(6, CCN);
 			  ps.executeUpdate();
 //			  stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			log.error("SQL Error: ", e);
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateBalance(int oID, int balance){
+		String SQL = "SELECT totalCost from orders WHERE Id='"+oID+"'";
+	    Statement stat;
+	    int remaining;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			rs.next();
+			remaining = rs.getInt("totalCost");
+			remaining = remaining - balance;
+			SQL = "UPDATE orders SET totalCost='"+ remaining+"' WHERE Id='"+oID+"'";
+			stat.executeUpdate(SQL);
+		    stat.close();   
 		} catch (SQLException e) {
 			log.error("SQL Error: ", e);
 			e.printStackTrace();

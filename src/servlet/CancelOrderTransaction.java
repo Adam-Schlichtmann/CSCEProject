@@ -13,6 +13,8 @@ import model.OrderItems;
 import model.OrderItemsDB;
 import model.Orders;
 import model.OrdersDB;
+import model.Performance;
+import model.PerformanceDB;
 
 /**
  * Servlet implementation class CancelOrderTransaction
@@ -46,8 +48,14 @@ public class CancelOrderTransaction extends HttpServlet {
 		
 		orderItemsDB.delOrderItem(Integer.parseInt(orderItemID)); //delete order item from database
 		//ordersDB.setTotalPrice(int orderID, int newTotalPrice); //need to update total price in database for order
+		ordersDB.updateBalance(orderItem.getOrderId(), refundAmount);
 		
+		if(totalPrice <= 0) {
+			ordersDB.delOrder(orderItem.getOrderId());
+		}
 		
+		PerformanceDB performanceDB = new PerformanceDB();
+		performanceDB.updateTicketsByPID(orderItem.getPerformanceId(), (orderItem.getQuantity()*-1));
 		request.setAttribute("order", order);
 		request.setAttribute("orderItem", orderItem);
 		request.setAttribute("refundAmount", refundAmount );

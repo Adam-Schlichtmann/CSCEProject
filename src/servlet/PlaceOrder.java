@@ -101,7 +101,12 @@ public class PlaceOrder extends HttpServlet {
 					List<Orders> customerOrders = OrdersDB.getAllOrders();
 					int temp  = -10000;
 					System.out.println("size : " + customerOrders.size());
-					temp = customerOrders.size() +1;
+					
+					for(int i = 0 ; i <customerOrders.size(); i++) {
+						if(customerOrders.get(i).getId() >= temp) {
+							temp = customerOrders.get(i).getId() +1;
+						}
+					}
 					System.out.println("temp :" + temp);
 					ordersDB.createOrder(newOrder);
 					for(int i = 0; i< previousCartItems.getItems().size();i++) {

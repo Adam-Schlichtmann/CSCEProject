@@ -40,4 +40,13 @@ public class OrdersDB {
 		db.createOrder(o);
 		db.closeConnection();
 	}
+	
+	public static void updateBalance(int oID, int balance){
+		DBAccess db = new DBAccess();
+		db.connectMeIn();
+		db.updateBalance(oID, balance);
+		db.closeConnection();
+	}
+	
+	
 }
