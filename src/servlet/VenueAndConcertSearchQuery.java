@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.CPTValues;
 import model.CPTValuesDB;
@@ -47,12 +48,29 @@ public class VenueAndConcertSearchQuery extends HttpServlet {
         List<CPTValues> cpt = new ArrayList<CPTValues>();
 		PerformanceDB perf = new PerformanceDB();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		HttpSession session = request.getSession();
 		
-		String venue = request.getParameter("venue");
-		String date = request.getParameter("datepicker");
-		System.out.println(venue);
-
-		System.out.println(date);
+		String venue = (String) session.getAttribute("venue");
+		String date = (String) session.getAttribute("date");
+		
+		if(venue == null) {
+			venue = request.getParameter("venue");
+		} else if (venue != null && request.getParameter("venue") == null){
+			venue = (String) session.getAttribute("venue");
+		} else {
+			venue = request.getParameter("venue");
+		}
+		
+		if(date == null) {
+			date = request.getParameter("datepicker");
+		} else if (date != null && request.getParameter("datepicker") == null){
+			date = (String) session.getAttribute("date");
+		} else {
+			date = request.getParameter("datepicker");
+		}
+		
+		System.out.println("Date: " + date);
+		System.out.println("Venye: " + venue);
 
         List<Performance> perfList = PerformanceDB.getPerformancebyDate(date, Integer.parseInt(venue));
         for(int i = 0 ; i<perfList.size(); i++) {
@@ -60,6 +78,9 @@ public class VenueAndConcertSearchQuery extends HttpServlet {
         }
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ConcertSearchResults.jsp");
 		request.setAttribute("cpt", cpt);
+		
+		session.setAttribute("venue", venue);
+		session.setAttribute("date", date);
 		dispatcher.forward(request, response);
 	}
 

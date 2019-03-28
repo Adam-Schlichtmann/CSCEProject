@@ -65,7 +65,7 @@
 		<table style="width:100%">
 			<tr>
 				<td>
-					<form action="ConcertSearchResults.jsp">
+					<form action="VenueAndConcertSearchQuery">
 						<input type=submit value="Back">
 					</form>
 				</td>
@@ -179,6 +179,7 @@
 		
 		<input type="hidden" id="cID" value="${cpt.getC().getId()}" />
 		<input type="hidden" id="uID" value="${id}" />
+		
 		
 	</body>
 </html>

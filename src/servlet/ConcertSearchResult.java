@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.CPTValues;
 import model.CPTValuesDB;
@@ -45,6 +46,10 @@ public class ConcertSearchResult extends HttpServlet {
         List<CPTValues> temp = new ArrayList<CPTValues>();
         ReviewDB reviewDB = new ReviewDB(); 
         List<Review> review = new ArrayList<Review>();
+        String venue = request.getParameter("venue");
+        String date = request.getParameter("date");
+        request.setAttribute("venue", venue);
+        request.setAttribute("date", date);
         
         
 		int performanceID = Integer.parseInt(request.getParameter("detailsButton"));
