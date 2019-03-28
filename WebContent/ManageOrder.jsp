@@ -27,11 +27,11 @@
 			  	</tr>
     		    <c:forEach items="${orderItems}" var="item">
 			        <tr>
-			            <td>${item.getCpt().getC().getConcertName()} </td>
-			            <td>${item.getQuantity()}</td>
-			            <td>${item.getCpt().getV().getName()}</td>
-			            <td>${item.getCpt().getP().getStartTime()}</td>
-			            <td>${item.getCpt().getT().getTicketPrice()}</td>
+			            <td><c:out value="${item.getCpt().getC().getConcertName()}"></c:out> </td>
+			            <td><c:out value="${item.getQuantity()}"></c:out></td>
+			            <td><c:out value="${item.getCpt().getV().getName()}"></c:out></td>
+			            <td><c:out value="${item.getCpt().getP().getStartTime()}"></c:out></td>
+			            <td><c:out value="${item.getCpt().getT().getTicketPrice()}"></c:out></td>
 			            <td style="text-align:center"><form action=CancelOrder >
 			        	<input type="hidden" name="venueID" value="${item.getCpt().getP().getVenueID()}">
 			        	<button name="orderItemID" type=submit value="${item.getId()}">Cancel Order</button></form></td>
@@ -42,7 +42,7 @@
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center">Total </td>
-				    <td style="text-align:center">$ ${orders.getTotalCost() }</td>	
+				    <td style="text-align:center">$ <c:out value="${orders.getTotalCost() }"></c:out></td>	
 				  	<td style="text-align:center"></td>
 			    </tr>
 			    <tr>
@@ -50,7 +50,7 @@
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center">Date Order </td>
-				    <td style="text-align:center">${orders.getOrderDate()}</td>
+				    <td style="text-align:center"><c:out value="${orders.getOrderDate()}"></c:out></td>
 				  	<td style="text-align:center"></td>
 			    </tr>
 		  	</table>

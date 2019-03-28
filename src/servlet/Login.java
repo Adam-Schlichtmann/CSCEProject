@@ -58,6 +58,7 @@ public class Login extends HttpServlet {
 			if(UsersDB.validateUserByPassword(password)) {	
 				customerId = UsersDB.getUserID(userName);
 				HttpSession session = request.getSession();
+				session.setMaxInactiveInterval(10*60);
 				session.setAttribute("id", customerId);
 				List<Venue> venueList = VenueDB.getAllVenues();
 				session.setAttribute("venueList", venueList);

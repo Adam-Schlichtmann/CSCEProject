@@ -34,6 +34,29 @@
 		}
 	</style>
 	<body>
+	<script>
+		  	function addToCart() {
+				var review = document.getElementById("ticketQuantity").value;
+			 	var rating = document.getElementById("ticketType").value;
+			 	var cID = document.getElementById("cID").value;
+			 	var uID = document.getElementById("uID").value;
+			 	
+			 	console.log(review);
+			 	$.post("addReviewServlet", {rev:review, rat:rating, CID:cID, UID:uID}, function(data,status) {
+			 		console.log(data);
+			    	if(data == null) {	    			
+			   			alert("Review Submission Unsucessful");
+			   		} else {
+			   			alert("We got it")	
+			   			var Table = document.getElementById("reviewTable");
+			   			Table.innerHTML = "";
+			   			Table.innerHTML = data;
+			   			
+			   		}
+			    	
+			 	});
+			}
+		</script>
 		<link rel="stylesheet" type="text/css" href="NavigationBarTheme.css">
 		<div class="topnav">
 		  <a class="active" href="CustomerHomePage.jsp">Home</a>
@@ -51,7 +74,7 @@
 
 				<td align="right">
 					<form action="UpdateShoppingCart">
-						<select name="ticketQuantity">
+						<select id="ticketQuantity">
 						    <option value=1>1</option>
 						    <option value=2>2</option>
 						    <option value=3>3</option>
@@ -62,7 +85,7 @@
 						    <option value=8>8</option>
 						    <option value=9>9</option>
 					  	</select>
-					  	<select name="ticketType">
+					  	<select id="ticketType">
 					  	<c:forEach items="${seats}" var="tickets">
 					  		<option value="${tickets.getTicketVenuePricesID()}">${tickets.getSeatName()}</option>
 					  	</c:forEach>
@@ -79,17 +102,17 @@
 		<h1 style="text-align:center">Details</h1>
 		<h2 style="text-align:center" name="concertName">${cpt.c.getConcertName()}</h2>
 		<div class="center">
-			<p>${cpt.getC().getDescription()}</p>
+			<p><c:out value="${cpt.getC().getDescription()}"></c:out></p>
 			<br>
             <img src="${cpt.getC().getThumbnail()}" align="middle" height="60%" >
             <br>
-            <p>${cpt.getV().getName()}</p>
+            <p><c:out value="${cpt.getV().getName()}"></c:out></p>
             <br>
-            <p>Date/Time : ${cpt.getP().getStartTime()}</p>
+            <p>Date/Time : <c:out value="${cpt.getP().getStartTime()}"></c:out></p>
             <br>
-            <p>Tickets : $ ${cpt.getT().getTicketPrice()}</p>
+            <p>Tickets : $ <c:out value="${cpt.getT().getTicketPrice()}"></c:out></p>
             <br>
-            <p>Remaining Seats : ${cpt.getP().getRemainingSeats()}</p>
+            <p>Remaining Seats : <c:out value="${cpt.getP().getRemainingSeats()}"></c:out></p>
             <br>
 		</div>
 		

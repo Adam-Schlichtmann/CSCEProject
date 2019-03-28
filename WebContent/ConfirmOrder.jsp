@@ -19,7 +19,7 @@
 				cardNumberTemp = Number(cardNumberTemp);
 			
 			   	// make call to Bank
-				 $.post("../WebApp/BankTransaction", {firstName:firstName, lastName:lastName, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumberTemp:cardNumberTemp}, function(data,status) {
+				 $.post("../CSCE464-BANK/BankTransaction", {firstName:firstName, lastName:lastName, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumberTemp:cardNumberTemp}, function(data,status) {
 					    
 			    		
 			    	 // Following data values are received from the "FormjQueryResponse" app
@@ -35,7 +35,7 @@
 			    			var bankStatus = true;
 			    			 $.get("PlaceOrder", {firstName:firstName, lastName:lastName, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumberTemp:cardNumberTemp}, function(data,status) {
 			 		    	 
-			 				}
+			 				});
 					}
 			    		
 			    		//*** END of the block for receiving data from another APP***

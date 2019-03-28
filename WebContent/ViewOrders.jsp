@@ -48,9 +48,9 @@
 		        	<td style="text-align:center"><form action=ManageOrder >
 		        	<input type="hidden" name="order" value="${order.getId()}">
 		        	<button name="orderID" type=submit value="${order.getId()}">View Order Details</button></form></td>
-		            <td>${order.getId()} </td>
-		            <td>${order.getTotalCost()}</td>
-		            <td>${order.getOrderDate()}</td>
+		            <td><c:out value="${order.getId()}"></c:out> </td>
+		            <td><c:out value="${order.getTotalCost()}"></c:out></td>
+		            <td><c:out value="${order.getOrderDate()}"></c:out></td>
 		        </tr>
 		    </c:forEach>
 	  	</table>
