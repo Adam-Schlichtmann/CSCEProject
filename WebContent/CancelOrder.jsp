@@ -31,12 +31,12 @@
 		  	</tr>
 		  	<tr>
 		  		<td></td>
-			  	<td style="text-align:center">${orderItem.cpt.c.getConcertName()}</td>
-			  	<td style="text-align:center">${orderItem.getQuantity()}</td>
-			  	<td style="text-align:center">${orderItem.cpt.v.getName()}</td>
-			    <td style="text-align:center">${orderItem.cpt.p.getStartTime()}</td>
-			    <td style="text-align:center">$ ${orderItem.getTotalPrice()}</td>
-			    <td style="text-align:center">${ orderItem.processed ? 'Processed' : 'Processing'}</td>
+			  	<td style="text-align:center"><c:out value="${orderItem.cpt.c.getConcertName()}"></c:out></td>
+			  	<td style="text-align:center"><c:out value="${orderItem.getQuantity()}"></c:out></td>
+			  	<td style="text-align:center"><c:out value="${orderItem.cpt.v.getName()}"></c:out></td>
+			    <td style="text-align:center"><c:out value="${orderItem.cpt.p.getStartTime()}"></c:out></td>
+			    <td style="text-align:center">$ <c:out value="${orderItem.getTotalPrice()}"></c:out></td>
+			    <td style="text-align:center"><c:out value="${ orderItem.processed ? 'Processed' : 'Processing'}"></c:out></td>
 		    </tr>
 
 	  	</table>

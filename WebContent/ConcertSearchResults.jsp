@@ -31,10 +31,10 @@
 		        	<td style="text-align:center"><form action=ConcertSearchResult >
 		        	<input type="hidden" name="venueID" value="${concert.getP().getVenueID()}">
 		        	<button name="detailsButton" type=submit value="${concert.getP().getId()}">View Concert Details</button></form></td>
-		            <td>${concert.getC().getConcertName()} </td>
-		            <td>${concert.getP().getStartTime()}</td>
-		            <td>${concert.getP().getRemainingSeats()}</td>
-		            <td>$ ${concert.getT().getTicketPrice()}</td>
+		            <td><c:out value="${concert.getC().getConcertName()}"></c:out> </td>
+		            <td><c:out value="${concert.getP().getStartTime()}"></c:out></td>
+		            <td><c:out value="${concert.getP().getRemainingSeats()}"></c:out></td>
+		            <td>$ <c:out value="${concert.getT().getTicketPrice()}"></c:out></td>
 		            <td>NO IMAGE</td>
 		        </tr>
 		    </c:forEach>

@@ -18,7 +18,6 @@
 				var shippingAddress  = document.getElementById("shippingAddress").value;
 				var cardNumber  = document.getElementById("cardNumber").value;
 				var cardSec = document.getElementById("cardSec").value;
-				console.log(cardNumber);
 			   	// make call to Bank
 				 $.post("../Bank/BankTransaction", {firstName:firstName, lastName:lastName, cardSec:cardSec, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumber:cardNumber}, function(data,status) {
 					    
