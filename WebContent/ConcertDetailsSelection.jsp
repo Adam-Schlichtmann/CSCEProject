@@ -34,23 +34,21 @@
 		}
 	</style>
 	<body>
-	<script>
+		<script>
 		  	function addToCart() {
-				var review = document.getElementById("ticketQuantity").value;
-			 	var rating = document.getElementById("ticketType").value;
+				var q = document.getElementById("ticketQuantity").value;
+			 	var t = document.getElementById("ticketType").value;
 			 	var cID = document.getElementById("cID").value;
-			 	var uID = document.getElementById("uID").value;
 			 	
 			 	console.log(review);
-			 	$.post("addReviewServlet", {rev:review, rat:rating, CID:cID, UID:uID}, function(data,status) {
+			 	$.post("addToShoppingCart", {quantity:q, ticketType:t, CID:cID}, function(data,status) {
 			 		console.log(data);
 			    	if(data == null) {	    			
-			   			alert("Review Submission Unsucessful");
+			   			alert("Item not added to cart");
 			   		} else {
-			   			alert("We got it")	
-			   			var Table = document.getElementById("reviewTable");
-			   			Table.innerHTML = "";
-			   			Table.innerHTML = data;
+			   			var res = document.getElementById("cartUpdate");
+			   			res.innerHTML = "";
+			   			res.innerHTML = data;
 			   			
 			   		}
 			    	
@@ -71,30 +69,29 @@
 						<input type=submit value="Back">
 					</form>
 				</td>
+				<td>
+					<span style="color:lime" id="cartUpdate"></span>
+				</td>
 
 				<td align="right">
-					<form action="UpdateShoppingCart">
-						<select id="ticketQuantity">
-						    <option value=1>1</option>
-						    <option value=2>2</option>
-						    <option value=3>3</option>
-						    <option value=4>4</option>
-						    <option value=5>5</option>
-						    <option value=6>6</option>
-						    <option value=7>7</option>
-						    <option value=8>8</option>
-						    <option value=9>9</option>
-					  	</select>
-					  	<select id="ticketType">
-					  	<c:forEach items="${seats}" var="tickets">
-					  		<option value="${tickets.getTicketVenuePricesID()}">${tickets.getSeatName()}</option>
-					  	</c:forEach>
-					  		
-						</select>
-						<form action=ViewAndCheckoutShoppingCart name="search">
-							<button name="selectedConcert" type=submit value="${cpt.getP().getId()}">Add to Cart</button>
-						</form>
-					</form>
+					<select id="ticketQuantity">
+					    <option value=1>1</option>
+					    <option value=2>2</option>
+					    <option value=3>3</option>
+					    <option value=4>4</option>
+					    <option value=5>5</option>
+					    <option value=6>6</option>
+					    <option value=7>7</option>
+					    <option value=8>8</option>
+					    <option value=9>9</option>
+				  	</select>
+				  	<select id="ticketType">
+				  	<c:forEach items="${seats}" var="tickets">
+				  		<option value="${tickets.getTicketVenuePricesID()}">${tickets.getSeatName()}</option>
+				  	</c:forEach>
+				  		
+					</select>
+					<button onclick="addToCart();" id="selectedConcert" type=submit value="${cpt.getP().getId()}">Add to Cart</button>
 				</td>
 			</tr>
 		</table>
@@ -170,7 +167,6 @@
 			    	if(data == null) {	    			
 			   			alert("Review Submission Unsucessful");
 			   		} else {
-			   			alert("We got it")	
 			   			var Table = document.getElementById("reviewTable");
 			   			Table.innerHTML = "";
 			   			Table.innerHTML = data;
