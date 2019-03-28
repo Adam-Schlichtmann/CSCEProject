@@ -18,8 +18,9 @@
 				var shippingAddress  = document.getElementById("shippingAddress").value;
 				var cardNumber  = document.getElementById("cardNumber").value;
 				var cardSec = document.getElementById("cardSec").value;
+				var total = document.getElementById("cost").value;
 			   	// make call to Bank
-				 $.post("../Bank/BankTransaction", {firstName:firstName, lastName:lastName, cardSec:cardSec, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumber:cardNumber}, function(data,status) {
+				 $.post("../Bank/BankTransaction", {firstName:firstName, lastName:lastName, cardSec:cardSec, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumber:cardNumber, total:total}, function(data,status) {
 					    
 			    		
 			    	 // Following data values are received from the "FormjQueryResponse" app
@@ -35,7 +36,7 @@
 			    		
 			    		if(data == 1) {	
 			    			var bankStatus = true;
-			    			 $.get("PlaceOrder", {firstName:firstName, lastName:lastName, password:password, cardSec:cardSec, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumber:cardNumber}, function(data,status) {
+			    			 $.get("PlaceOrder", {firstName:firstName, lastName:lastName, password:password, cardSec:cardSec, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumber:cardNumber, total:total}, function(data,status) {
 			 		    	   var form_table = document.getElementById("form_table");
 			 		    	   var success_message=document.getElementById("success_message");
 			 		    	   form_table.style.display= "none";
@@ -90,7 +91,7 @@
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center"></td>
 				  	<td style="text-align:center">Total </td>
-				    <td style="text-align:center"><c:out value="$ ${cart.getTotalPrice()}"/></td>	
+				    <td id="total" style="text-align:center">${cart.getTotalPrice()}</td>	
 			    </tr>
 		  	</table>
 			<table align="center" id="form_table">
@@ -162,6 +163,7 @@
 				</td>
 			</tr>
 		</table>
+		<input type="hidden" id="cost" value="${cart.getTotalPrice()}" />
 		<h2 id="status" align="center" > </h2>
 	</body>
 </html>

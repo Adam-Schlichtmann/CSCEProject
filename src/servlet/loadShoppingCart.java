@@ -74,7 +74,7 @@ public class loadShoppingCart extends HttpServlet {
 					"<td style=\"text-align:center\"></td>" + 
 					"<td style=\"text-align:center\">Total Cost:</td>" + 
 					"<td style=\"text-align:center\">=</td>" + 
-					"<td style=\"text-align:center\">" + previousCartItems.getTotalPrice() + "</td>" + 
+					"<td id=\"total\" style=\"text-align:center\">" + previousCartItems.getTotalPrice() + "</td>" + 
 					"<td style=\"text-align:center\"></td>" + 
 					"</tr>";
 		}
