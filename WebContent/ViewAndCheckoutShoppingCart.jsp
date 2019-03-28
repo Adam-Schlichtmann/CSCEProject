@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+		</script>
 <meta charset="UTF-8">
 <title>Shopping Cart</title>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
@@ -13,7 +15,7 @@
 		  <a class="active" href="CustomerHomePage.jsp">Home</a>
 		  <a href="ViewOrders">Orders</a>
 		  <a href="Login.jsp" style="float:right">Log Out</a>
-		  <a href="UpdateShoppingCart">Shopping Cart</a>
+		  <a href="ViewAndCheckoutShoppingCart.jsp"">Shopping Cart</a>
 		</div>
 		<script>
 		(function(){	
