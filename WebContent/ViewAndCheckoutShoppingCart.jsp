@@ -15,13 +15,28 @@
 		  <a href="Login.jsp" style="float:right">Log Out</a>
 		  <a href="ViewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
 		</div>
+		<script>
+		(function(){	
+		 	$.post("loadShoppingCart", {}, function(data,status) {
+		 		console.log(data);
+		    	if(data == null) {	    			
+		   			alert("No Cart to Load");
+		   		} else {
+		   			var res = document.getElementById("cartTable");
+		   			res.innerHTML = "";
+		   			res.innerHTML = data;
+		   			
+		   		}
+		    	
+		 	});
+		})();
+		
+		</script>
 		
 		
 		<script>
 		  	function removeFromCart() {
 				var pID = document.getElementById("deleteConcert").value;
-			 	
-			 	console.log(review);
 			 	$.post("removeFromShoppingCart", {deleteConcert:pID}, function(data,status) {
 			 		console.log(data);
 			    	if(data == null) {	    			
