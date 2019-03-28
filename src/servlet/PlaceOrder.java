@@ -49,7 +49,6 @@ public class PlaceOrder extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		hashingUtil hash = new hashingUtil();
 		long cardNumber =0;
 		int cardSec =0;
 		String firstName = request.getParameter("firstName");
@@ -70,7 +69,7 @@ public class PlaceOrder extends HttpServlet {
 		String password = request.getParameter("password");
 		try {
 			System.out.println("password : " + password);
-			password = hash.hashPassword(password);
+			password = hashingUtil.hashPassword(password);
 			System.out.println("Hashed : " + password);
 		} catch (NoSuchAlgorithmException e1) {
 			// TODO Auto-generated catch block

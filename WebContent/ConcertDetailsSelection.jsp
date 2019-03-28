@@ -74,7 +74,7 @@
 
 				<td align="right">
 					<form action="UpdateShoppingCart">
-						<select id="ticketQuantity">
+						<select id="ticketQuantity" name="ticketQuantity">
 						    <option value=1>1</option>
 						    <option value=2>2</option>
 						    <option value=3>3</option>

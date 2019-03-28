@@ -517,7 +517,7 @@ public class DBAccess {
 	    Statement stat;
 		try {
 			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
+			int rs = stat.executeUpdate(SQL);
 		    stat.close();
 		        
 		} catch (SQLException e) {

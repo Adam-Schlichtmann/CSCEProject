@@ -9,7 +9,7 @@
 <meta charset="ISO-8859-1">
 <title>Confirm Order</title>
 	<script>
-			function getdata() {
+			function confirm_function() {
 				var firstName = document.getElementById("firstName").value;
 				var lastName  = document.getElementById("lastName").value;
 				var password = document.getElementById("password").value;
@@ -24,17 +24,22 @@
 			    		
 			    	 // Following data values are received from the "FormjQueryResponse" app
 			    		if(data == 0) {	    			
-			    			alert("FROM BANKING APP: Your credit card does not have enough balance");
+			    			
+			    			$("#status").text("FROM BANKING APP: Your credit card does not have enough balance");
 			    		}
 			    	 
 			    		if(data == -1) {	    			
-			    			alert("FROM BANKING APP: Invalid Credit Card");
+			    			alert("FROM BANKING APP: Invalid Credit Card Information");
+			    			
 			    		}
 			    		
 			    		if(data == 1) {	
 			    			var bankStatus = true;
 			    			 $.get("PlaceOrder", {firstName:firstName, lastName:lastName, password:password, cardSec:cardSec, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumber:cardNumber}, function(data,status) {
-			 		    	  
+			 		    	   var form_table = document.getElementById("form_table");
+			 		    	   var success_message=document.getElementById("success_message");
+			 		    	   form_table.style.display= "none";
+			 		    	   $("#status").text("Transaction Approved and order is being processed!");
 			 				});
 						}
 			    		
@@ -88,7 +93,7 @@
 				    <td style="text-align:center"><c:out value="$ ${cart.getTotalPrice()}"/></td>	
 			    </tr>
 		  	</table>
-			<table align="center">
+			<table align="center" id="form_table">
 			<tr>
 				<td>
 						First Name: <input type=text id="firstName" name="firstName" style="margin:10px" placeholder="John"><br>
@@ -149,12 +154,14 @@
 						Password:  <input type=password id="password" name="password" style="margin:10px" placeholder='6-Characters'><br>
 					
 					<div style="text-align:center; margin:10px;">
-						<input type=submit value="Cancel">					
-						<input  type=submit value="Confirm Payment" onClick="getdata()" >	
+						<input type=submit value="Cancel">		
+									
+						<input  type=submit value="Confirm Payment" onClick="confirm_function()" >	
 						
 					</div>
 				</td>
 			</tr>
 		</table>
+		<h2 id="status" align="center" > </h2>
 	</body>
 </html>
