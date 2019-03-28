@@ -10,16 +10,17 @@
 <title>Confirm Order</title>
 	<script>
 			function getdata() {
-				var firstName = $("#firstName").val();
-				var lastName  = $("#lastName").val();
-				var cardType  = $("#cardType").val();
-				var billingAddress  = $("#billingAddress").val();
-				var shippingAddress  = $("#shippingAddress").val();
-				var cardNumberTemp  = $("#cardNumber").val();
-				cardNumberTemp = Number(cardNumberTemp);
-			
+				var firstName = document.getElementById("firstName").value;
+				var lastName  = document.getElementById("lastName").value;
+				var password = document.getElementById("password").value;
+				var cardType  = document.getElementById("cardType").value;
+				var billingAddress  = document.getElementById("billingAddress").value;
+				var shippingAddress  = document.getElementById("shippingAddress").value;
+				var cardNumber  = document.getElementById("cardNumber").value;
+				var cardSec = document.getElementById("cardSec").value;
+				console.log(cardNumber);
 			   	// make call to Bank
-				 $.post("../WebApp/BankTransaction", {firstName:firstName, lastName:lastName, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumberTemp:cardNumberTemp}, function(data,status) {
+				 $.post("../Bank/BankTransaction", {firstName:firstName, lastName:lastName, cardSec:cardSec, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumber:cardNumber}, function(data,status) {
 					    
 			    		
 			    	 // Following data values are received from the "FormjQueryResponse" app
@@ -33,10 +34,10 @@
 			    		
 			    		if(data == 1) {	
 			    			var bankStatus = true;
-			    			 $.get("PlaceOrder", {firstName:firstName, lastName:lastName, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumberTemp:cardNumberTemp}, function(data,status) {
-			 		    	 
-			 				}
-					}
+			    			 $.get("PlaceOrder", {firstName:firstName, lastName:lastName, password:password, cardSec:cardSec, cardType:cardType, billingAddress:billingAddress, shippingAddress:shippingAddress, cardNumber:cardNumber}, function(data,status) {
+			 		    	  
+			 				});
+						}
 			    		
 			    		//*** END of the block for receiving data from another APP***
 			    			
@@ -91,12 +92,12 @@
 			<table align="center">
 			<tr>
 				<td>
-						First Name: <input type=text name=firstName style="margin:10px" placeholder="John"><br>
-						Last Name: <input type=text name=lastName style="margin:10px" placeholder="Doe"><br>
+						First Name: <input type=text id="firstName" name="firstName" style="margin:10px" placeholder="John"><br>
+						Last Name: <input type=text id="lastName" name="firstName" style="margin:10px" placeholder="Doe"><br>
 						<table>
 							<tr>Card Type : </tr>
 							<tr>
-								<select name='cardType' id='card'>
+								<select name='cardType' id='cardType'>
 								    <option value=''>Card</option>
 								    <option value='Visa'>Visa</option>
 								    <option value='MasterCard'>MasterCard</option>
@@ -106,12 +107,12 @@
 							<br>
 							<br>
 							<tr>
-								Card Number: <input type=text name="cardNumber" >
+								Card Number: <input type=text id="cardNumber" name="cardNumber" >
 							</tr>
 							<br>
 							<br>
 							<tr>
-								Security code: <input type=text name="sec" >
+								Security code: <input type=text id="cardSec"  name="cardSec">
 							</tr>
 							<br>
 							<tr>Expiration Date : </tr>
@@ -144,14 +145,12 @@
 									</select>
 							</tr>
 						</table>
-						Billing Address: <input type=text name=billingAddress style="margin:10px" placeholder='1 A St, Lincoln, NE-68508'><br>
-						Shipping Address: <input type=text name=shippingAddress style="margin:10px" placeholder='1 A St, Lincoln, NE-68508'><br>
-						Password:  <input type=password name=password style="margin:10px" placeholder='6-Characters'><br>
+						Billing Address: <input type=text id="billingAddress" name="billingAddress" style="margin:10px" placeholder='1 A St, Lincoln, NE-68508'><br>
+						Shipping Address: <input type=text id="shippingAddress" name="shippingAddress" style="margin:10px" placeholder='1 A St, Lincoln, NE-68508'><br>
+						Password:  <input type=password id="password" name="password" style="margin:10px" placeholder='6-Characters'><br>
 					
 					<div style="text-align:center; margin:10px;">
-						
-						<input type=submit value="Cancel">
-					
+						<input type=submit value="Cancel">					
 						<input  type=submit value="Confirm Payment" onClick="getdata()" >	
 						
 					</div>

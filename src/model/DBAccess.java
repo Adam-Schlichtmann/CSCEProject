@@ -166,7 +166,7 @@ public class DBAccess {
 	}
 	
 	public void updateRemainingTickets(int pID, int tickets){
-		String SQL = "SELECT remainingTickets from performance WHERE Id='"+pID+"'";
+		String SQL = "SELECT remainingSeats from performance WHERE Id='"+pID+"'";
 	    Statement stat;
 	    int remaining;
 		try {
@@ -539,7 +539,7 @@ public class DBAccess {
 			  ps.setInt(1, oID);
 			  ps.setInt(2, pID);
 			  ps.setInt(3, quantity);
-			  ps.executeQuery();
+			  ps.executeUpdate();
 			  
 			// stmt.executeUpdate(sql);
 		} catch (SQLException e) {

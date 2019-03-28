@@ -46,12 +46,9 @@ public class CancelOrder extends HttpServlet {
 		int orderItemID = Integer.parseInt(request.getParameter("orderItemID"));
 		OrderItemsDB orderItemsDB = new OrderItemsDB();
 		OrderItems orderItem = orderItemsDB.getOrderItembyOrderItemID(orderItemID);
-//		List<Orders> order = OrdersDB.getOrdersByOrderID(cancelOrderID);
-//		for(int i=0; i < newOrder.size(); i++) {
-//			if(newOrder.get(i).getId() == cancelOrderID) {
-//				newOrder.remove(i);
-//			}
-//		}
+		
+
+		
 		int totalPrice = orderItem.getCpt().getT().getTicketPrice() * orderItem.getQuantity();
 		orderItem.setTotalPrice(totalPrice);
 
@@ -63,24 +60,24 @@ public class CancelOrder extends HttpServlet {
 	}
 
 	private void cancelValidation(OrderItems orderItem) {
-//		OrdersDB ordersDB = new OrdersDB();
-//		Orders orders = OrdersDB.getOrdersByOrderID(orderItem.getOrderId());
-//		Date currentDate = new Date();
-//		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-//		Date date = null;
-//		try {
-//			date = format.parse(orders.getOrderDate());
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		System.out.println(date);
-//		
-//		if(currentDate.after(date)) {
-//			orderItem.setProcessed(false);
-//		}else {
-//			orderItem.setProcessed(true);
-//		}
+		OrdersDB ordersDB = new OrdersDB();
+		Orders orders = OrdersDB.getOrdersByOrderID(orderItem.getOrderId());
+		Date currentDate = new Date();
+		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+		Date date = null;
+		try {
+			date = format.parse(orders.getOrderDate().toString());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(date);
+		
+		if(currentDate.after(date)) {
+			orderItem.setProcessed(false);
+		}else {
+			orderItem.setProcessed(true);
+		}
 	}
 
 	/**

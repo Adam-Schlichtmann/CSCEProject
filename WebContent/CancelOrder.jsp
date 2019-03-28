@@ -46,7 +46,7 @@
 			</form>
 			<br>
 			<form action="CancelOrderTransaction">
-				<button name="orderID" type=submit  value="${orderItem.getOrderId()}" ${ orderItem.processed ? 'disabled="disabled"' : ''} >Confirm Cancellation</button>
+				<button name="orderID" type=submit  value="${orderItem.getId()}" ${ orderItem.processed ? 'disabled="disabled"' : ''} >Confirm Cancellation</button>
 			</form>
 		</div>
 	</body>

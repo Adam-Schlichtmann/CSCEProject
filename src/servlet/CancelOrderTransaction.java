@@ -39,7 +39,6 @@ public class CancelOrderTransaction extends HttpServlet {
 		Orders order = new Orders();
 		OrdersDB ordersDB = new OrdersDB();
 		
-		
 		order = ordersDB.getOrdersByOrderID(orderItem.getOrderId());
 		int refundAmount = orderItem.getCpt().getT().getTicketPrice() * orderItem.getQuantity();
 		int totalPrice =  order.getTotalCost() - refundAmount;

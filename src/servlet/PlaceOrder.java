@@ -16,8 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.OrderItems;
+import model.OrderItemsDB;
 import model.Orders;
 import model.OrdersDB;
+import model.PerformanceDB;
 import model.ShoppingCart;
 import model.Users;
 import model.UsersDB;
@@ -66,7 +69,9 @@ public class PlaceOrder extends HttpServlet {
 		}	
 		String password = request.getParameter("password");
 		try {
+			System.out.println("password : " + password);
 			password = hash.hashPassword(password);
+			System.out.println("Hashed : " + password);
 		} catch (NoSuchAlgorithmException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -81,6 +86,9 @@ public class PlaceOrder extends HttpServlet {
 					RequestDispatcher dispatcher = request.getRequestDispatcher("CustomerTransactionConfirmation.jsp");
 					Orders newOrder = new Orders();
 					OrdersDB ordersDB = new OrdersDB();
+					OrderItems newOrderItem = new OrderItems();
+					OrderItemsDB newOrderItemsDB = new OrderItemsDB();
+					PerformanceDB performanceDB = new PerformanceDB();
 					ShoppingCart previousCartItems = (ShoppingCart)session.getAttribute("cart");
 					int customerId = (int) session.getAttribute("id");
 					
@@ -90,6 +98,25 @@ public class PlaceOrder extends HttpServlet {
 					newOrder.setCreditCardNumber(cardNumber);
 					newOrder.setBillingAddress(billingAddress);
 					newOrder.setShippingAddress(shippingAddress);
+					
+					List<Orders> customerOrders = OrdersDB.getOrdersByCustomerID(customerId);
+					int temp  = -10000;
+					for(int j = 0; j <customerOrders.size();j++ ) {
+						if(customerOrders.get(j).getId() > temp) {
+							temp = customerOrders.get(j).getId();
+						}
+					}
+					
+					for(int i = 0; i< previousCartItems.getItems().size();i++) {
+						newOrderItem.setCpt(previousCartItems.getItems().get(i).getCpt());
+						newOrderItem.setOrderId(temp);
+						newOrderItem.setPerformanceId(newOrderItem.getCpt().getP().getId());
+						newOrderItem.setQuantity(previousCartItems.getItems().get(i).getAmountOfTickets());
+						performanceDB.updateTicketsByPID(newOrderItem.getPerformanceId(), newOrderItem.getQuantity());
+						newOrderItemsDB.addOrderItem(newOrderItem);
+					}
+					
+					
 					
 					ordersDB.createOrder(newOrder);
 					session.setAttribute("cart", null);

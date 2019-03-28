@@ -22,8 +22,8 @@
 			<h4>Quantity : ${orderItem.getQuantity()}</h4>
 			<h4>Venue : ${orderItem.getCpt().getV().getName()}</h4>
 			<h4>Time : ${orderItem.cpt.p.getStartTime()}</h4>
-			<h4>Paid Total : ${order.getTotalCost()}</h4>
-			<h4>Refund Amount : $ ${orderItem.getTotalPrice()}</h4>
+			<h4>NEW Paid Total : ${order.getTotalCost()}</h4>
+			<h4>Refund Amount : $ ${refundAmount}</h4>
 			<h4 style="color:Green">Status: Order Cancelled, Processing Refund</h4>
 		</form>
 	</body>
