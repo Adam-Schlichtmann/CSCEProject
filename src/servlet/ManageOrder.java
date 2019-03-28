@@ -47,8 +47,6 @@ public class ManageOrder extends HttpServlet {
 		request.setAttribute("orders", orders);
 		request.setAttribute("orderItems", orderItems);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ManageOrder.jsp");
-		System.out.println(orderItems.get(0).getCpt().getV().getName());
-		System.out.println("here");
 		dispatcher.forward(request, response);
 	}
 
