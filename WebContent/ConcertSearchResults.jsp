@@ -35,7 +35,7 @@
 		            <td><c:out value="${concert.getP().getStartTime()}"></c:out></td>
 		            <td><c:out value="${concert.getP().getRemainingSeats()}"></c:out></td>
 		            <td>$ <c:out value="${concert.getT().getTicketPrice()}"></c:out></td>
-		            <td>NO IMAGE</td>
+		            <td><img src="${concert.getC().getThumbnail()}" align="middle" height="100" width="100" ></td>
 		        </tr>
 		    </c:forEach>
 

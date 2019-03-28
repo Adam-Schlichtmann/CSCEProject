@@ -16,7 +16,7 @@
 		  <a href="ViewAndCheckoutShoppingCart.jsp">Shopping Cart</a>
 		</div>
 		<h1 style="text-align:center">Order Cancellation</h1>
-		<img src="Pics/Drake.jpg" alt="Drake" style="display:block; margin:auto auto; width:200px; height:200px"></img>
+		<img src="${orderItem.getCpt().getC().getThumbnail() }" alt="Drake" style="display:block; margin:auto auto; width:200px; height:200px"></img>
 		<br>
 		<table style="width:100%" align="center">
 		  	<tr>
